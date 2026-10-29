@@ -254,15 +254,28 @@ set_source_files_properties(
   src/Monstey_AnimationHierarchy.cpp
   src/Monstey_AnimationPreview.cpp
   src/Monstey_AnimationPreviewApi.cpp
+  src/Monstey_App.cpp
   src/Monstey_AssetInspect.cpp
   src/Monstey_Core.cpp
   src/Monstey_FearConstraintReader.cpp
   src/Monstey_FearConstraintTable.cpp
   src/Monstey_FearCrtComparison.cpp
   src/Monstey_FearDbInspector.cpp
+  src/Monstey_FearDbNames.cpp
+  src/Monstey_FearDbOpen.cpp
   src/Monstey_FearDbPacked.cpp
   src/Monstey_FearDbPrimitives.cpp
   src/Monstey_FearDbResources.cpp
+  src/Monstey_FearUnpackedCallback.cpp
+  src/Monstey_FearUnpackedCleanup.cpp
+  src/Monstey_FearUnpackedInspection.cpp
+  src/Monstey_FearUnpackedLine.cpp
+  src/Monstey_FearUnpackedMaterialize.cpp
+  src/Monstey_FearUnpackedOpen.cpp
+  src/Monstey_FearUnpackedOwned.cpp
+  src/Monstey_FearUnpackedValidate.cpp
+  src/Monstey_Gadb.cpp
+  src/Monstey_GadbAnonymousRecord.cpp
   src/Monstey_GadbAudioActionWord.cpp
   src/Monstey_GadbAudioNextKey.cpp
   src/Monstey_GadbBankActivation.cpp
@@ -276,9 +289,20 @@ set_source_files_properties(
   src/Monstey_GadbCategoryReader.cpp
   src/Monstey_GadbClassDeclaration.cpp
   src/Monstey_GadbClassDeclarationApi.cpp
+  src/Monstey_GadbConcreteRecords.cpp
   src/Monstey_GadbEncodedString.cpp
   src/Monstey_GadbIntegerWord.cpp
+  src/Monstey_GadbManagerBackend.cpp
+  src/Monstey_GadbManagerFree.cpp
+  src/Monstey_GadbManagerGuardProjection.cpp
+  src/Monstey_GadbManagerLeaveProjection.cpp
+  src/Monstey_GadbManagerParent.cpp
+  src/Monstey_GadbManagerPlacement.cpp
+  src/Monstey_GadbManagerPrimitives.cpp
   src/Monstey_GadbNamePointerBoundary.cpp
+  src/Monstey_GadbPoolRelocation.cpp
+  src/Monstey_GadbPublication.cpp
+  src/Monstey_GadbPublicationFramed.cpp
   src/Monstey_GadbRecordLookup.cpp
   src/Monstey_GadbReferenceWord.cpp
   src/Monstey_GadbRemainingContracts.cpp
@@ -287,6 +311,7 @@ set_source_files_properties(
   src/Monstey_GadbStringPointer.cpp
   src/Monstey_GadbValueFixup.cpp
   src/Monstey_Json.cpp
+  src/Monstey_LtaDependency.cpp
   src/Monstey_LtmiMaterial.cpp
   src/Monstey_MaterialProject.cpp
   src/Monstey_ModelPreview.cpp
@@ -306,37 +331,10 @@ set_source_files_properties(
   src/Monstey_NavigationBounds.cpp
   src/Monstey_NavigationRegistration.cpp
   src/Monstey_NavigationStreaming.cpp
+  src/Monstey_Runtime.cpp
   src/Monstey_SkelDefaultPose.cpp
   src/Monstey_StaticNavFaceBounds.cpp
   src/Monstey_TextureApi.cpp
-  PROPERTIES COMPILE_OPTIONS /fp:strict)
-set_source_files_properties(
-  src/Monstey_App.cpp
-  src/Monstey_FearDbNames.cpp
-  src/Monstey_FearDbOpen.cpp
-  src/Monstey_FearUnpackedCallback.cpp
-  src/Monstey_FearUnpackedCleanup.cpp
-  src/Monstey_FearUnpackedInspection.cpp
-  src/Monstey_FearUnpackedLine.cpp
-  src/Monstey_FearUnpackedMaterialize.cpp
-  src/Monstey_FearUnpackedOpen.cpp
-  src/Monstey_FearUnpackedOwned.cpp
-  src/Monstey_FearUnpackedValidate.cpp
-  src/Monstey_Gadb.cpp
-  src/Monstey_GadbAnonymousRecord.cpp
-  src/Monstey_GadbConcreteRecords.cpp
-  src/Monstey_GadbManagerBackend.cpp
-  src/Monstey_GadbManagerFree.cpp
-  src/Monstey_GadbManagerGuardProjection.cpp
-  src/Monstey_GadbManagerLeaveProjection.cpp
-  src/Monstey_GadbManagerParent.cpp
-  src/Monstey_GadbManagerPlacement.cpp
-  src/Monstey_GadbManagerPrimitives.cpp
-  src/Monstey_GadbPoolRelocation.cpp
-  src/Monstey_GadbPublication.cpp
-  src/Monstey_GadbPublicationFramed.cpp
-  src/Monstey_LtaDependency.cpp
-  src/Monstey_Runtime.cpp
   src/gadb/Monstey_GadbAtoms.cpp
   src/gadb/Monstey_GadbCommon.cpp
   src/gadb/Monstey_GadbEditing.cpp
@@ -366,7 +364,7 @@ set_source_files_properties(
   src/runtime/Monstey_RuntimeValidation.cpp
   src/runtime/Monstey_RuntimeWorld.cpp
   ${MONSTEY_APP_SOURCES}
-  PROPERTIES COMPILE_OPTIONS "/O2;/W4;/WX;/permissive-;/EHsc;/utf-8;/fp:strict")
+  PROPERTIES COMPILE_OPTIONS /fp:strict)
 
 add_library(Monstey_Core STATIC src/Monstey_Core.cpp src/Monstey_Json.cpp)
 target_include_directories(Monstey_Core PUBLIC include)

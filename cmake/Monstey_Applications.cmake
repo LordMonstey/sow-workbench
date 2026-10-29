@@ -43,13 +43,13 @@ monstey_program(Monstey_GadbRegistryTool SOURCES src/Monstey_GadbRegistryTool.cp
 monstey_program(Monstey_GadbClassCacheTool SOURCES src/Monstey_GadbClassCacheTool.cpp STRICT)
 monstey_program(Monstey_FearDbInspector SOURCES src/Monstey_FearDbInspectorMain.cpp STRICT)
 monstey_program(Monstey_FearConstraintInspect SOURCES src/Monstey_FearConstraintInspect.cpp STRICT)
-monstey_program(Monstey_FearUnpackedInspector SOURCES src/Monstey_FearUnpackedInspector.cpp OPTIMIZED STATIC_CRT)
+monstey_program(Monstey_FearUnpackedInspector SOURCES src/Monstey_FearUnpackedInspector.cpp STRICT)
 
 # Developer tools that are built but not installed.
-monstey_program(Monstey_AtomInspect SOURCES src/Monstey_AtomInspect.cpp OPTIMIZED STATIC_CRT)
+monstey_program(Monstey_AtomInspect SOURCES src/Monstey_AtomInspect.cpp STRICT)
 monstey_program(Monstey_AudioCountInspect SOURCES src/Monstey_AudioCountInspect.cpp STRICT)
 monstey_program(Monstey_SelectedCountInspect SOURCES src/Monstey_SelectedCountInspect.cpp STRICT)
-monstey_program(Monstey_GadbBankActivationInspect SOURCES src/Monstey_GadbBankActivationInspect.cpp OPTIMIZED)
+monstey_program(Monstey_GadbBankActivationInspect SOURCES src/Monstey_GadbBankActivationInspect.cpp STRICT)
 monstey_program(Monstey_GadbBankRegistrationTool SOURCES src/Monstey_GadbBankRegistrationTool.cpp)
 monstey_program(Monstey_GadbConditionalBuffTool SOURCES src/Monstey_GadbConditionalBuffTool.cpp)
 monstey_program(Monstey_GadbClass30Tool SOURCES src/Monstey_GadbClass30Tool.cpp)

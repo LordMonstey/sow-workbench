@@ -4,14 +4,13 @@
 set(MONSTEY_CXX_FLAGS /W4 /WX /permissive- /EHsc /utf-8 /Zc:__cplusplus)
 
 # monstey_program(<target> [SOURCES <file>...] [LIBS <library>...]
-#                 [INCLUDES <directory>...] [STRICT] [OPTIMIZED] [STATIC_CRT])
+#                 [INCLUDES <directory>...] [STRICT])
 #
 # Console program built from tests/<target>.cpp unless SOURCES is given, and
 # linked with Monstey_Data unless LIBS is given. STRICT compiles it with
-# /fp:strict, OPTIMIZED with /O2 /fp:strict. STATIC_CRT uses the release CRT
-# in every configuration.
+# /fp:strict.
 function(monstey_program target)
-  cmake_parse_arguments(PARSE_ARGV 1 arg "STRICT;OPTIMIZED;STATIC_CRT" "" "SOURCES;LIBS;INCLUDES")
+  cmake_parse_arguments(PARSE_ARGV 1 arg "STRICT" "" "SOURCES;LIBS;INCLUDES")
   if(NOT arg_SOURCES)
     set(arg_SOURCES "tests/${target}.cpp")
   endif()
@@ -23,13 +22,8 @@ function(monstey_program target)
   if(arg_INCLUDES)
     target_include_directories(${target} PRIVATE ${arg_INCLUDES})
   endif()
-  if(arg_OPTIMIZED)
-    target_compile_options(${target} PRIVATE /O2 /fp:strict)
-  elseif(arg_STRICT)
+  if(arg_STRICT)
     target_compile_options(${target} PRIVATE /fp:strict)
-  endif()
-  if(arg_STATIC_CRT)
-    set_property(TARGET ${target} PROPERTY MSVC_RUNTIME_LIBRARY MultiThreaded)
   endif()
 endfunction()
 

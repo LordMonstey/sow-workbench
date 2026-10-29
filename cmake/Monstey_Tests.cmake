@@ -95,7 +95,7 @@ add_executable(Monstey_CategoryPresentationTests
   tests/Monstey_CategoryPresentationTests.cpp
   src/app/panels/Monstey_CategoryPresentation.cpp)
 target_compile_definitions(Monstey_CategoryPresentationTests PRIVATE NOMINMAX WIN32_LEAN_AND_MEAN)
-target_compile_options(Monstey_CategoryPresentationTests PRIVATE ${MONSTEY_CXX_FLAGS} /O2 /fp:strict)
+target_compile_options(Monstey_CategoryPresentationTests PRIVATE ${MONSTEY_CXX_FLAGS} /fp:strict)
 monstey_test(NativeCategoryPresentation COMMAND Monstey_CategoryPresentationTests)
 
 # NativeModel writes the synthetic mesh/skeleton pair the other model tests read.
@@ -361,10 +361,10 @@ monstey_script_test(Monstey_GadbRemainingContractsIndependent RunRemainingIndepe
 monstey_program(Monstey_GadbReferenceWordTests STRICT)
 monstey_script_test(NativeGadbReferenceWord RunReferenceWord TIMEOUT 60
   "-DEXE=$<TARGET_FILE:Monstey_GadbReferenceWordTests>" "-DOUT=${out}/reference-word-results")
-monstey_program(Monstey_ReferenceIndependent OPTIMIZED)
+monstey_program(Monstey_ReferenceIndependent STRICT)
 monstey_script_test(Monstey.ReferenceGetterIndependent RunReferenceIndependent TIMEOUT 120
   "-DEXE=$<TARGET_FILE:Monstey_ReferenceIndependent>" "-DOUT=${out}/reports")
-monstey_program(Monstey_GadbAudioNextKeyTests OPTIMIZED)
+monstey_program(Monstey_GadbAudioNextKeyTests STRICT)
 monstey_script_test(Monstey.GadbAudioNextKey RunAudioNextKey TIMEOUT 120
   "-DEXE=$<TARGET_FILE:Monstey_GadbAudioNextKeyTests>" "-DREPORT_DIR=${out}/reports")
 monstey_program(Monstey_GadbNextKeyIndependent SOURCES tests/Monstey_NextKeyIndependent.cpp STRICT)
@@ -379,22 +379,22 @@ monstey_script_test(NativeGadbAudioActionIndependent RunAudioIndependent
 monstey_program(Monstey_GadbSelectedCountWordTests SOURCES tests/Monstey_SelectedCountWordTests.cpp STRICT)
 monstey_script_test(NativeGadbSelectedCountWord RunSelectedCountWord
   "-DEXE=$<TARGET_FILE:Monstey_GadbSelectedCountWordTests>" "-DOUTPUT_DIR=${out}/selected-count-test-output")
-monstey_program(Monstey_SelectedCountIndependent OPTIMIZED)
+monstey_program(Monstey_SelectedCountIndependent STRICT)
 monstey_script_test(Monstey.SelectedCountIndependent RunSelectedCountIndependent TIMEOUT 120
   "-DEXE=$<TARGET_FILE:Monstey_SelectedCountIndependent>" "-DOUT=${out}/reports")
 monstey_program(Monstey_GadbIntegerWordTests STRICT)
 monstey_script_test(NativeGadbIntegerWord RunInteger TIMEOUT 90
   "-DEXE=$<TARGET_FILE:Monstey_GadbIntegerWordTests>" "-DOUT=${out}/integer-results")
-monstey_program(Monstey_IntegerIndependent OPTIMIZED)
+monstey_program(Monstey_IntegerIndependent STRICT)
 monstey_script_test(Monstey.IntegerWordIndependent RunIntegerIndependent TIMEOUT 90
   "-DEXE=$<TARGET_FILE:Monstey_IntegerIndependent>" "-DOUT=${out}/integer-independent-results")
-monstey_program(Monstey_GadbBankActivationTests OPTIMIZED)
+monstey_program(Monstey_GadbBankActivationTests STRICT)
 monstey_script_test(Monstey.GadbBankActivation RunBankActivation TIMEOUT 120 RUN_SERIAL
   "-DEXE=$<TARGET_FILE:Monstey_GadbBankActivationTests>" "-DOUT=${out}/reports")
-monstey_program(Monstey_BankActivationIndependent OPTIMIZED)
+monstey_program(Monstey_BankActivationIndependent STRICT)
 monstey_script_test(Monstey.BankActivationIndependent RunBankActivationIndependent TIMEOUT 120 RUN_SERIAL
   "-DEXE=$<TARGET_FILE:Monstey_BankActivationIndependent>" "-DOUT=${out}/reports")
-monstey_program(Monstey_GadbValueFixupTests OPTIMIZED)
+monstey_program(Monstey_GadbValueFixupTests STRICT)
 monstey_script_test(NativeGadbValueFixup RunGadbValueFixup TIMEOUT 120
   "-DEXE=$<TARGET_FILE:Monstey_GadbValueFixupTests>" "-DOUT=${out}/value-fixup-reports")
 monstey_program(Monstey_GadbValueFixupIndependent STRICT)
@@ -402,7 +402,7 @@ monstey_script_test(NativeGadbValueFixupIndependent RunGadbValueFixupIndependent
   "-DEXE=$<TARGET_FILE:Monstey_GadbValueFixupIndependent>" "-DOUT=${out}/fixup-independent-reports")
 
 # Records, pools, publication and categories.
-monstey_program(Monstey_AtomUsesTests OPTIMIZED STATIC_CRT)
+monstey_program(Monstey_AtomUsesTests STRICT)
 monstey_test(NativeGadbAtomUses TIMEOUT 60 LABELS native sow database synthetic
   COMMAND Monstey_AtomUsesTests "${out}/atomuses-synthetic")
 foreach(case IN ITEMS
@@ -411,19 +411,19 @@ foreach(case IN ITEMS
   string(REPLACE ":" ";" case "${case}")
   list(GET case 0 stem)
   list(GET case 1 directory)
-  monstey_program(Monstey_${stem}Tests OPTIMIZED STATIC_CRT)
+  monstey_program(Monstey_${stem}Tests STRICT)
   monstey_script_test(Native${stem} Run${stem} TIMEOUT 120
     "-DEXE=$<TARGET_FILE:Monstey_${stem}Tests>" "-DOUT=${out}/${directory}")
 endforeach()
-monstey_program(Monstey_SowPoolIndependent OPTIMIZED STATIC_CRT INCLUDES tests
+monstey_program(Monstey_SowPoolIndependent STRICT INCLUDES tests
   SOURCES tests/Monstey_SowPoolProductAdapter010.cpp tests/Monstey_SowPoolIndependent010.cpp)
 monstey_script_test(NativeSowPoolIndependent RunSowPoolIndependent TIMEOUT 120
   "-DEXE=$<TARGET_FILE:Monstey_SowPoolIndependent>" "-DOUT=${out}/sow-pool-independent-reports")
-monstey_program(Monstey_SowAnonymousIndependent OPTIMIZED STATIC_CRT INCLUDES tests
+monstey_program(Monstey_SowAnonymousIndependent STRICT INCLUDES tests
   SOURCES tests/Monstey_AnonymousProductAdapter003.cpp tests/Monstey_AnonymousIndependent003.cpp)
 monstey_script_test(NativeSowAnonymousIndependent RunSowAnonymousIndependent TIMEOUT 120
   "-DEXE=$<TARGET_FILE:Monstey_SowAnonymousIndependent>" "-DOUT=${out}/anonymous-independent-reports")
-monstey_program(Monstey_SowAtomRuntimeTests LIBS Monstey_Runtime OPTIMIZED STATIC_CRT)
+monstey_program(Monstey_SowAtomRuntimeTests LIBS Monstey_Runtime STRICT)
 monstey_script_test(Monstey_SowAtomRuntime RunSowAtomRuntime
   "-DEXE=$<TARGET_FILE:Monstey_SowAtomRuntimeTests>" "-DCATALOG=${CMAKE_CURRENT_SOURCE_DIR}/tests/sow-atom/catalog226.json"
   "-DOUTPUT_ROOT=${out}/tests/sow-atom-runtime")
@@ -441,11 +441,11 @@ foreach(case IN ITEMS
   list(GET case 2 directory)
   list(GET case 3 timeout)
   string(REGEX REPLACE "^Native" "Run" script "${name}")
-  monstey_program(Monstey_${stem}Tests OPTIMIZED)
+  monstey_program(Monstey_${stem}Tests STRICT)
   monstey_script_test(${name} ${script} TIMEOUT ${timeout}
     "-DEXE=$<TARGET_FILE:Monstey_${stem}Tests>" "-DOUT=${out}/${directory}")
 endforeach()
-monstey_program(Monstey_GadbCategoryCompositionIndependent OPTIMIZED INCLUDES tests/sow-category-independent
+monstey_program(Monstey_GadbCategoryCompositionIndependent STRICT INCLUDES tests/sow-category-independent
   SOURCES tests/sow-category-independent/Monstey_CategoryReference.cpp
           tests/sow-category-independent/Monstey_CategoryConcreteBindings.cpp
           tests/sow-category-independent/Monstey_CategoryCompositionIndependentFinal.cpp)
@@ -461,10 +461,10 @@ foreach(case IN ITEMS
   list(GET case 1 program)
   list(GET case 2 script)
   list(GET case 3 directory)
-  monstey_program(${program} OPTIMIZED STATIC_CRT)
+  monstey_program(${program} STRICT)
   monstey_script_test(${name} ${script} TIMEOUT 60 "-DEXE=$<TARGET_FILE:${program}>" "-DOUT=${out}/${directory}")
 endforeach()
-monstey_program(Monstey_GadbPublicationIndependent OPTIMIZED STATIC_CRT INCLUDES tests/sow-publication-independent
+monstey_program(Monstey_GadbPublicationIndependent STRICT INCLUDES tests/sow-publication-independent
   SOURCES tests/sow-publication-independent/Monstey_PublicationReference.cpp tests/Monstey_PublicationIndependent.cpp)
 monstey_script_test(NativeSowPublicationIndependent RunSowPublicationIndependent TIMEOUT 120
   "-DEXE=$<TARGET_FILE:Monstey_GadbPublicationIndependent>" "-DOUT=${out}/publication-independent-results")
@@ -472,7 +472,7 @@ foreach(case IN ITEMS Framed:framed FrameExceptions:frame-exceptions)
   string(REPLACE ":" ";" case "${case}")
   list(GET case 0 stem)
   list(GET case 1 directory)
-  monstey_program(Monstey_GadbPublication${stem}Independent OPTIMIZED STATIC_CRT
+  monstey_program(Monstey_GadbPublication${stem}Independent STRICT
     INCLUDES tests/sow-publication-framed-independent
     SOURCES tests/sow-publication-framed-independent/Monstey_PublicationFramedReference.cpp
             tests/Monstey_Publication${stem}Independent.cpp)
@@ -483,10 +483,10 @@ endforeach()
 
 # Database manager: each owned test has an independent differential peer.
 foreach(stem IN ITEMS Primitives Placement Backend Free GuardProjection)
-  monstey_program(Monstey_GadbManager${stem}Tests OPTIMIZED STATIC_CRT)
+  monstey_program(Monstey_GadbManager${stem}Tests STRICT)
 endforeach()
-monstey_program(Monstey_GadbManagerLeaveProjectionTests SOURCES tests/Monstey_LeaveProductOwned.cpp OPTIMIZED STATIC_CRT)
-monstey_program(Monstey_GadbManagerParentTests OPTIMIZED STATIC_CRT)
+monstey_program(Monstey_GadbManagerLeaveProjectionTests SOURCES tests/Monstey_LeaveProductOwned.cpp STRICT)
+monstey_program(Monstey_GadbManagerParentTests STRICT)
 monstey_test(NativeSowManagerPrimitivesOwned TIMEOUT 120 COMMAND $<TARGET_FILE:Monstey_GadbManagerPrimitivesTests>)
 monstey_test(NativeSowManagerPlacementOwned TIMEOUT 120 COMMAND $<TARGET_FILE:Monstey_GadbManagerPlacementTests>)
 monstey_test(NativeSowManagerBackendOwned TIMEOUT 120 RUN_SERIAL COMMAND $<TARGET_FILE:Monstey_GadbManagerBackendTests>)
@@ -504,22 +504,22 @@ foreach(case IN ITEMS LeaveProjection:leave-owner Parent:parent-owner)
   target_link_options(Monstey_GadbManager${stem}Tests PRIVATE "/MAP:${out}/${map}-$<CONFIG>.map" /INCREMENTAL:NO)
 endforeach()
 
-monstey_program(Monstey_GadbManagerPrimitivesIndependent OPTIMIZED STATIC_CRT
+monstey_program(Monstey_GadbManagerPrimitivesIndependent STRICT
   INCLUDES tests/sow-manager-primitives-independent
   SOURCES tests/sow-manager-primitives-independent/Monstey_ManagerPrimitiveReference.cpp
           tests/Monstey_ManagerPrimitiveIndependent.cpp)
 monstey_script_test(NativeSowGadbManagerPrimitivesIndependent RunSowManagerPrimitiveIndependent TIMEOUT 120
   "-DEXE=$<TARGET_FILE:Monstey_GadbManagerPrimitivesIndependent>" "-DOUT=${out}/manager-primitives-independent-results")
-monstey_program(Monstey_SowManagerPlacementIndependent OPTIMIZED STATIC_CRT INCLUDES include tests
+monstey_program(Monstey_SowManagerPlacementIndependent STRICT INCLUDES include tests
   SOURCES tests/Monstey_SowManagerPlacementIndependent.cpp tests/Monstey_PlacementReference.cpp)
 monstey_script_test(NativeSowManagerPlacementIndependent RunSowManagerPlacementIndependent TIMEOUT 120 RUN_SERIAL
   "-DMonstey_Exe=$<TARGET_FILE:Monstey_SowManagerPlacementIndependent>"
   "-DMonstey_ReportDirectory=${out}/sow-manager-placement-independent-results")
-monstey_program(Monstey_SowManagerBackendIndependent OPTIMIZED STATIC_CRT INCLUDES include tests
+monstey_program(Monstey_SowManagerBackendIndependent STRICT INCLUDES include tests
   SOURCES tests/Monstey_BackendDifferential.cpp tests/Monstey_BackendReference.cpp tests/Monstey_PlacementReference.cpp)
 monstey_script_test(NativeSowManagerBackendIndependent RunSowManagerBackendIndependent TIMEOUT 120 RUN_SERIAL
   "-DMonstey_Exe=$<TARGET_FILE:Monstey_SowManagerBackendIndependent>" "-DMonstey_Out=${out}/backend-independent-results")
-monstey_program(Monstey_SowManagerFreeIndependent OPTIMIZED STATIC_CRT INCLUDES include tests
+monstey_program(Monstey_SowManagerFreeIndependent STRICT INCLUDES include tests
   SOURCES tests/Monstey_FreeActualIndependent.cpp tests/Monstey_FreeReference.cpp
           tests/Monstey_BackendReference.cpp tests/Monstey_PlacementReference.cpp)
 monstey_script_test(NativeSowManagerFreeIndependent RunSowManagerFreeIndependent TIMEOUT 120 RUN_SERIAL
@@ -532,11 +532,11 @@ monstey_script_test(NativeSowManagerFreeIndependent RunSowManagerFreeIndependent
   "-DMonstey_DataObjectRoot=${out}/Monstey_Data.dir/$<CONFIG>"
   "-DMonstey_FreeCPP=${CMAKE_CURRENT_SOURCE_DIR}/src/Monstey_GadbManagerFree.cpp"
   "-DMonstey_FreeHPP=${CMAKE_CURRENT_SOURCE_DIR}/include/Monstey_GadbManagerFree.hpp")
-monstey_program(Monstey_SowManagerGuardProjectionIndependent OPTIMIZED STATIC_CRT INCLUDES include tests
+monstey_program(Monstey_SowManagerGuardProjectionIndependent STRICT INCLUDES include tests
   SOURCES tests/Monstey_GuardProjectionDifferential.cpp tests/Monstey_GuardProjectionReference.cpp)
 target_link_options(Monstey_SowManagerGuardProjectionIndependent PRIVATE
   "/MAP:${out}/guard-projection-independent-$<CONFIG>.map")
-monstey_program(Monstey_SowManagerParentIndependent OPTIMIZED STATIC_CRT INCLUDES include tests tests/sow_manager_parent
+monstey_program(Monstey_SowManagerParentIndependent STRICT INCLUDES include tests tests/sow_manager_parent
   SOURCES
     tests/sow_manager_parent/Monstey_ParentCanonicalServices.cpp
     tests/sow_manager_parent/Monstey_ParentCapture.cpp
@@ -552,7 +552,7 @@ monstey_program(Monstey_SowManagerParentIndependent OPTIMIZED STATIC_CRT INCLUDE
     tests/Monstey_PlacementReference.cpp)
 target_link_options(Monstey_SowManagerParentIndependent PRIVATE
   "/MAP:${out}/parent-independent-$<CONFIG>.map" /INCREMENTAL:NO)
-monstey_program(Monstey_SowManagerLeaveProjectionIndependent OPTIMIZED STATIC_CRT
+monstey_program(Monstey_SowManagerLeaveProjectionIndependent STRICT
   INCLUDES include tests tests/sow_manager_parent
   SOURCES tests/Monstey_LeaveProjectionDifferential.cpp tests/Monstey_LeaveProjectionReference.cpp)
 target_link_options(Monstey_SowManagerLeaveProjectionIndependent PRIVATE
@@ -584,13 +584,13 @@ monstey_program(Monstey_FearReaderIndependent STRICT)
 monstey_script_test(NativeFearReaderIndependent RunFearReaderIndependent TIMEOUT 90
   "-DEXE=$<TARGET_FILE:Monstey_FearReaderIndependent>" "-DOUTPUT_ROOT=${out}/fear-reader-independent")
 
-monstey_program(Monstey_FearDbPackedTests OPTIMIZED)
-monstey_program(Monstey_PackedNameRescanTests OPTIMIZED)
-monstey_program(Monstey_FearResourceTests SOURCES tests/Monstey_FearDbResourceTests.cpp OPTIMIZED)
-monstey_program(Monstey_ResourcePackedAliasTests OPTIMIZED)
-monstey_program(Monstey_FearNamesTests SOURCES tests/Monstey_FearDbNameTests.cpp OPTIMIZED)
-monstey_program(Monstey_FearDbOpenTests OPTIMIZED)
-monstey_program(Monstey_OpenPackedAliasTests OPTIMIZED)
+monstey_program(Monstey_FearDbPackedTests STRICT)
+monstey_program(Monstey_PackedNameRescanTests STRICT)
+monstey_program(Monstey_FearResourceTests SOURCES tests/Monstey_FearDbResourceTests.cpp STRICT)
+monstey_program(Monstey_ResourcePackedAliasTests STRICT)
+monstey_program(Monstey_FearNamesTests SOURCES tests/Monstey_FearDbNameTests.cpp STRICT)
+monstey_program(Monstey_FearDbOpenTests STRICT)
+monstey_program(Monstey_OpenPackedAliasTests STRICT)
 foreach(case IN ITEMS
     NativeFearDbPacked:Monstey_FearDbPackedTests:RunFearDbPacked:fear-packed-results
     NativeFearPackedNameRescan:Monstey_PackedNameRescanTests:RunPackedNameRescan:fear-packed-results
@@ -608,8 +608,8 @@ foreach(case IN ITEMS
     "-DEXE=$<TARGET_FILE:${program}>" "-DOUTPUT_ROOT=${out}/${directory}")
 endforeach()
 
-monstey_program(Monstey_PackedEpochIndependent OPTIMIZED)
-monstey_program(Monstey_FearPackedIndependent OPTIMIZED)
+monstey_program(Monstey_PackedEpochIndependent STRICT)
+monstey_program(Monstey_FearPackedIndependent STRICT)
 monstey_script_test(Monstey.FearPackedEpochIndependent RunFearPackedIndependent TIMEOUT 120
   "-DEXE=$<TARGET_FILE:Monstey_PackedEpochIndependent>" "-DMODE=epoch" "-DOUT=${out}/packed-independent")
 monstey_script_test(Monstey.FearPackedLayoutIndependent RunFearPackedIndependent TIMEOUT 120
@@ -617,10 +617,10 @@ monstey_script_test(Monstey.FearPackedLayoutIndependent RunFearPackedIndependent
 monstey_program(Monstey_FearResourceIndependent STRICT)
 monstey_script_test(NativeFearResourceIndependent RunFearResourceIndependent TIMEOUT 120
   "-DEXE=$<TARGET_FILE:Monstey_FearResourceIndependent>" "-DOUTPUT_ROOT=${out}/fear-resource-independent")
-monstey_program(Monstey_FearNamesIndependent OPTIMIZED)
+monstey_program(Monstey_FearNamesIndependent STRICT)
 monstey_script_test(Monstey.FearNamesIndependent RunFearNamesIndependent TIMEOUT 120
   "-DEXE=$<TARGET_FILE:Monstey_FearNamesIndependent>" "-DOUT=${out}/names-independent")
-monstey_program(Monstey_FearOpenIndependent OPTIMIZED)
+monstey_program(Monstey_FearOpenIndependent STRICT)
 monstey_script_test(Monstey.FearOpenIndependent RunFearOpenIndependent TIMEOUT 120
   "-DEXE=$<TARGET_FILE:Monstey_FearOpenIndependent>" "-DOUT=${out}/open-independent")
 
@@ -676,7 +676,7 @@ foreach(program IN ITEMS Monstey_FearUnpackedLineTests Monstey_FearUnpackedLineI
     Monstey_ValidateIndependent Monstey_FearUnpackedOpenTests Monstey_FearUnpackedOpenIndependent
     Monstey_FearUnpackedCallbackTests Monstey_CallbackIndependent Monstey_LtaDependencyTests
     Monstey_LtaIndependent Monstey_FearComparatorLifetimeTests Monstey_UnpackedInspectorTests)
-  monstey_program(${program} OPTIMIZED STATIC_CRT)
+  monstey_program(${program} STRICT)
 endforeach()
 monstey_script_test(NativeFearUnpackedLine RunFearUnpackedLine TIMEOUT 120
   "-DEXE=$<TARGET_FILE:Monstey_FearUnpackedLineTests>" "-DOUT=${out}/unpacked-line-results")
@@ -700,7 +700,7 @@ foreach(case IN ITEMS
   list(GET case 2 groups)
   list(GET case 3 cases)
   list(GET case 4 checks)
-  monstey_program(${name} SOURCES tests/${source}.cpp OPTIMIZED STATIC_CRT)
+  monstey_program(${name} SOURCES tests/${source}.cpp STRICT)
   monstey_script_test(${name} RunMaterializeV002Independent TIMEOUT 120
     "-DEXE=$<TARGET_FILE:${name}>" "-DOUTPUT_ROOT=${out}/${name}-results"
     "-DEXPECTED_GROUPS=${groups}" "-DEXPECTED_CASES=${cases}" "-DEXPECTED_CHECKS=${checks}")
@@ -736,12 +736,12 @@ foreach(case IN ITEMS Ordinary:Monstey_LogicalMapsIndependent:5765:3966919
   list(GET case 1 source)
   list(GET case 2 cases)
   list(GET case 3 checks)
-  monstey_program(Monstey_LogicalMaps${kind} SOURCES tests/${source}.cpp OPTIMIZED STATIC_CRT)
+  monstey_program(Monstey_LogicalMaps${kind} SOURCES tests/${source}.cpp STRICT)
   monstey_script_test(NativeFearLogicalMaps${kind} RunLogicalMapsIndependent TIMEOUT 120
     "-DEXE=$<TARGET_FILE:Monstey_LogicalMaps${kind}>" "-DOUTPUT_ROOT=${out}/logicalmap-results/${kind}"
     "-DEXPECTED_CASES=${cases}" "-DEXPECTED_CHECKS=${checks}")
 endforeach()
-monstey_program(Monstey_ComparatorIndependent SOURCES tests/Monstey_ComparatorAddressIndependent.cpp OPTIMIZED STATIC_CRT)
+monstey_program(Monstey_ComparatorIndependent SOURCES tests/Monstey_ComparatorAddressIndependent.cpp STRICT)
 target_compile_definitions(Monstey_ComparatorIndependent PRIVATE MONSTEY_BIND_PRODUCT=1)
 monstey_script_test(NativeFearComparatorIndependent RunComparatorIndependent TIMEOUT 120
   "-DEXE=$<TARGET_FILE:Monstey_ComparatorIndependent>" "-DOUTPUT_ROOT=${out}/comparator-independent-results")
@@ -751,9 +751,9 @@ monstey_script_test(NativeFearUnpackedInspectorCli RunFearUnpackedInspectorCli T
   "-DEXE=$<TARGET_FILE:Monstey_FearUnpackedInspector>" "-DTEST_EXE=$<TARGET_FILE:Monstey_UnpackedInspectorTests>"
   "-DOUTPUT_ROOT=${out}/fear-unpacked-cli")
 monstey_program(Monstey_UnpackedInspectorFixtures SOURCES tests/Monstey_UnpackedInspectorFixtureGenerator.cpp
-  LIBS Monstey_Core OPTIMIZED STATIC_CRT)
+  LIBS Monstey_Core STRICT)
 monstey_program(Monstey_UnpackedInspectorIndependent SOURCES tests/Monstey_UnpackedInspectorExpanded.cpp
-  OPTIMIZED STATIC_CRT)
+  STRICT)
 monstey_script_test(NativeFearUnpackedInspectorIndependent RunUnpackedInspectorIndependent TIMEOUT 120
   "-DGEN=$<TARGET_FILE:Monstey_UnpackedInspectorFixtures>" "-DEXE=$<TARGET_FILE:Monstey_UnpackedInspectorIndependent>"
   "-DOUTPUT_ROOT=${out}/unpacked-independent-results")
