@@ -1,0 +1,54 @@
+#include "Monstey_WorldSubmitContract.hpp"
+#include <Windows.h>
+#include <TlHelp32.h>
+#include <array>
+#include <charconv>
+#include <cmath>
+#include <cstring>
+#include <iostream>
+#include <limits>
+namespace {
+using namespace Monstey;
+using A=std::uint64_t;
+struct Handle { HANDLE value{}; explicit Handle(HANDLE h=nullptr):value(h){} ~Handle(){if(value&&value!=INVALID_HANDLE_VALUE)CloseHandle(value);} Handle(const Handle&)=delete;Handle& operator=(const Handle&)=delete; };
+std::string WinError(std::string_view text){return std::string(text)+" (Win32 "+std::to_string(GetLastError())+")";}
+A Number(const wchar_t* text){std::string s=Monstey_Utf8(text);int radix=10;if(s.starts_with("0x")){s.erase(0,2);radix=16;}A v{};const auto [p,e]=std::from_chars(s.data(),s.data()+s.size(),v,radix);if(e!=std::errc{}||p!=s.data()+s.size())throw Monstey_Error("world_probe_argument","Invalid unsigned integer");return v;}
+A Created(HANDLE p){FILETIME c{},e{},k{},u{};if(!GetProcessTimes(p,&c,&e,&k,&u))throw Monstey_Error("world_probe_identity",WinError("GetProcessTimes"));return (static_cast<A>(c.dwHighDateTime)<<32)|c.dwLowDateTime;}
+std::wstring ImagePath(HANDLE p){std::wstring s(32768,L'\0');DWORD n=static_cast<DWORD>(s.size());if(!QueryFullProcessImageNameW(p,0,s.data(),&n))throw Monstey_Error("world_probe_identity",WinError("QueryFullProcessImageNameW"));s.resize(n);return s;}
+void SamePath(std::wstring_view a,std::wstring_view b){if(CompareStringOrdinal(a.data(),static_cast<int>(a.size()),b.data(),static_cast<int>(b.size()),TRUE)!=CSTR_EQUAL)throw Monstey_Error("world_probe_identity","Unexpected process image path");}
+MODULEENTRY32W Module(DWORD pid){Handle h(CreateToolhelp32Snapshot(TH32CS_SNAPMODULE|TH32CS_SNAPMODULE32,pid));if(h.value==INVALID_HANDLE_VALUE)throw Monstey_Error("world_probe_identity",WinError("Module snapshot"));MODULEENTRY32W m{};m.dwSize=sizeof(m);if(!Module32FirstW(h.value,&m))throw Monstey_Error("world_probe_identity",WinError("Module32FirstW"));return m;}
+struct ReadResult { Monstey_Bytes bytes;std::uint32_t error{};bool complete{}; };
+class ProcessMemory final {
+    HANDLE process_;
+public:
+    explicit ProcessMemory(HANDLE p):process_(p){}
+    ReadResult Read(A address,std::size_t count) {ReadResult r;r.bytes.resize(count);SIZE_T got=0;SetLastError(ERROR_SUCCESS);const BOOL ok=ReadProcessMemory(process_,reinterpret_cast<const void*>(static_cast<std::uintptr_t>(address)),r.bytes.data(),count,&got);r.error=ok?0:GetLastError();if(got>count)throw Monstey_Error("world_probe_read","ReadProcessMemory returned excessive length");r.bytes.resize(got);r.complete=ok&&got==count;return r;}
+};
+void ImageHeader(ProcessMemory& m,A base,DWORD imageSize) {const auto raw=m.Read(base,4096);Monstey_Require(raw.complete&&raw.bytes.size()==4096,"Incomplete module header read");const auto& b=raw.bytes;Monstey_Require(Monstey_U16(b,0)==0x5A4D,"Invalid DOS header");const auto nt=Monstey_U32(b,0x3C);Monstey_Require(nt<=4096-88,"PE header outside selected bounded header");Monstey_Require(Monstey_U32(b,nt)==0x4550&&Monstey_U16(b,nt+4)==0x8664&&Monstey_U16(b,nt+24)==0x20B,"Unexpected loaded PE profile");Monstey_Require(Monstey_U32(b,nt+24+56)==imageSize,"Module extent differs from loaded PE header");}
+}
+namespace {
+A Monstey_CheckedAdd(A a,A offset){if(offset>std::numeric_limits<A>::max()-a)throw Monstey_Error("world_submit_address","Pointer addition overflow in offline reader");return a+offset;}
+std::string Monstey_Raw(std::span<const std::uint8_t> b){constexpr char h[]="0123456789abcdef";std::string s;for(auto x:b){s+=h[x>>4];s+=h[x&15];}return s;}
+}
+int wmain(int argc,wchar_t** argv){try{
+ using namespace Monstey;using J=Monstey_Json;using S=Monstey_WorldSubmitSnapshot;
+ if(argc!=5)throw Monstey_Error("world_submit_argument","Usage: WorldSubmitTool PID CREATION_FILETIME CULL_ADDRESS NEW-REPORT.json");
+ const A id=Number(argv[1]),creationExpected=Number(argv[2]),cullAddress=Number(argv[3]);if(!id||id>0xFFFFFFFF||!creationExpected)throw Monstey_Error("world_submit_argument","PID/creation outside selected profile");const auto pid=static_cast<DWORD>(id);
+ const std::filesystem::path out=argv[4];Monstey_RequireOfflineOutput(out);if(std::filesystem::exists(out))throw Monstey_Error("world_submit_output","Output already exists");
+ Handle process(OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION|PROCESS_VM_READ,FALSE,pid));if(!process.value)throw Monstey_Error("world_submit_identity",WinError("OpenProcess read-only"));const auto creation=Created(process.value);if(creation!=creationExpected)throw Monstey_Error("world_submit_identity","Stale PID creation");const auto image=ImagePath(process.value);const std::filesystem::path Monstey_ImageFile(image);Monstey_RequireOfflineOutput(out,std::array{Monstey_ImageFile});const auto hash=Monstey_HashSha256(Monstey_ImageFile);Monstey_Require(hash=="ed0d95cabb033cd66aaa99d699374881846c3cb03ec345f1123d82d45e0bdaef","Wrong installed image hash");const auto mod=Module(pid);SamePath(image,mod.szExePath);const A base=reinterpret_cast<std::uintptr_t>(mod.modBaseAddr);Monstey_Require(base==0x140000000,"Wrong module base");ProcessMemory memory(process.value);ImageHeader(memory,base,mod.modBaseSize);
+ std::vector<S> captured;J::Array issues,changes;std::size_t requestedBytes=0,requests=0;
+ auto Read=[&](A address,std::size_t count)->std::optional<S>{
+   if(!address||address<0x10000||address>0x7FFFFFFFFFFFULL||count-1>0x7FFFFFFFFFFFULL-address){issues.push_back(J::object({{"kind","invalid_pointer"},{"address",Monstey_Hex(address,16)},{"bytes",static_cast<A>(count)}}));return {};}
+   if(++requests>16||count>4096-requestedBytes)throw Monstey_Error("world_submit_budget","Bounded targeted read budget exceeded");requestedBytes+=count;auto r=memory.Read(address,count);if(!r.complete||r.bytes.size()!=count){issues.push_back(J::object({{"kind","partial_read"},{"address",Monstey_Hex(address,16)},{"requested",static_cast<A>(count)},{"transferred",static_cast<A>(r.bytes.size())},{"Win32",r.error}}));return {};}
+   S s{address,std::move(r.bytes)};captured.push_back(s);return s;
+ };
+ auto cull=Read(cullAddress,48);Monstey_WorldModelSnapshots inputs;std::optional<Monstey_WorldModelResult> resolved;std::optional<S> model,draw,drawBounds;J report=J::object({{"schema","Monstey.WorldSubmitLiveInspection/1"},{"model_inspection",J()},{"generic_inspection",J()}});
+ if(cull){const auto context=Read(Monstey_U64(cull->bytes,32),56);if(context){inputs.context=*context;inputs.wrapper=Read(Monstey_U64(context->bytes,0),32);if(inputs.wrapper){inputs.handle=Read(Monstey_U64(inputs.wrapper->bytes,0),16);if(inputs.handle){const auto slot=Monstey_U64(inputs.handle->bytes,8);bool sufficient=!slot;if(slot){inputs.slot=Read(slot,16);if(inputs.slot){const auto payload=Monstey_U64(inputs.slot->bytes,8);sufficient=!payload;if(payload){inputs.container=Read(payload,16);sufficient=inputs.container.has_value();}}}
+ if(sufficient){resolved=Monstey_WorldResolveModel(inputs);report["model_inspection"]=Monstey_WorldDescribeModel(*resolved);if(resolved->status==Monstey_WorldResolveStatus::Resolved&&resolved->model){model=Read(resolved->model,28);if(model){const auto index=Monstey_U16(cull->bytes,40);const auto count=Monstey_U32(model->bytes,24);if(index<count){draw=Read(Monstey_CheckedAdd(Monstey_U64(model->bytes,16),static_cast<A>(index)*128),128);const auto bounds=Monstey_U64(model->bytes,0);if(bounds)drawBounds=Read(Monstey_CheckedAdd(bounds,static_cast<A>(index)*32),32);}}}
+ bool canInspect=!resolved->model||resolved->native_hard_stop||model.has_value();if(model&&Monstey_U16(cull->bytes,40)<Monstey_U32(model->bytes,24)&&!draw)canInspect=false;if(canInspect)report["generic_inspection"]=Monstey_WorldDescribeGeneric(Monstey_WorldGenericDrawInspection(*cull,*context,*resolved,model,draw));
+ }}}}}
+ J::Array raw;for(const auto& s:captured){raw.push_back(J::object({{"address",Monstey_Hex(s.address,16)},{"bytes",static_cast<A>(s.bytes.size())},{"raw_hex",Monstey_Raw(s.bytes)},{"sha256",Monstey_HashSha256(s.bytes)}}));const auto after=memory.Read(s.address,s.bytes.size());if(!after.complete||after.bytes!=s.bytes)changes.push_back(J::object({{"address",Monstey_Hex(s.address,16)},{"bytes",static_cast<A>(s.bytes.size())},{"transferred",static_cast<A>(after.bytes.size())},{"Win32",after.error},{"before_sha256",Monstey_HashSha256(s.bytes)},{"after_sha256",Monstey_HashSha256(after.bytes)}}));}
+ DWORD exitCode{};Monstey_Require(GetExitCodeProcess(process.value,&exitCode)&&exitCode==STILL_ACTIVE,"Process ended");Monstey_Require(Created(process.value)==creation,"PID creation changed");SamePath(ImagePath(process.value),image);const auto afterMod=Module(pid);Monstey_Require(afterMod.modBaseAddr==mod.modBaseAddr&&afterMod.modBaseSize==mod.modBaseSize,"Main module changed");ImageHeader(memory,base,mod.modBaseSize);Monstey_Require(Monstey_HashSha256(Monstey_ImageFile)==hash,"Installed file changed");
+ report["process"]=J::object({{"pid",static_cast<std::uint32_t>(pid)},{"creation_filetime",creation},{"image",Monstey_Utf8(image)},{"sha256",hash},{"base",Monstey_Hex(base,16)},{"module_bytes",static_cast<std::uint32_t>(mod.modBaseSize)},{"identity_revalidated",true},{"open_access",0x1010}});report["raw_snapshots"]=raw;report["diagnostics"]=issues;report["observed_changes"]=changes;report["capture_read_calls"]=static_cast<A>(requests);report["capture_requested_bytes"]=static_cast<A>(requestedBytes);std::size_t verifiedBytes=0;for(const auto& s:captured)verifiedBytes+=s.bytes.size();report["verification_read_calls"]=static_cast<A>(captured.size());report["verification_requested_bytes"]=static_cast<A>(verifiedBytes);report["identity_header_read_calls"]=2;report["identity_header_read_bytes"]=8192;report["regions_unchanged"]=changes.empty();report["complete_targeted_snapshot"]=issues.empty()&&changes.empty();report["snapshot_atomic"]=false;report["cached_owner_producer"]="UNRESOLVED";report["cull_to_cached64_conversion"]="NOT_ESTABLISHED;25B800 only writes mask byte+2A";report["actual_vector_membership_or_gather_observed"]=false;report["model_readiness_beyond_exact_pointer_count_gates"]="UNVERIFIED";report["material_shader_resolution"]="UNVERIFIED";report["distance_helpers"]="OPAQUE";report["actual_rendering_verified"]=false;report["physics_navigation_verified"]=false;report["game_memory_written"]=false;report["native_game_functions_called"]=false;
+ Monstey_WriteNewText(out,report.dump(2)+"\n");std::cout<<"PASS bounded World submit inspection; "<<captured.size()<<" captured regions; rendering unverified\n";return 0;
+}catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}}

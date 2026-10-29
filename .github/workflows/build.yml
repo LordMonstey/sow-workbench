@@ -1,0 +1,39 @@
+name: Windows build
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: windows-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure
+        run: cmake -S . -B build -A x64
+      - name: Build
+        run: >-
+          cmake --build build --config Release --parallel 2 --target
+          Monstey_Workbench Monstey_WorkbenchCli
+          Monstey_WdscAuxiliaryProbe Monstey_LtmiTool
+          Monstey_WorldRuntimeProbe Monstey_GadbRegistryTool
+          Monstey_GadbClassCacheTool Monstey_WorldSubmitTool
+          Monstey_FearDbInspector Monstey_FearConstraintInspect Monstey_FearUnpackedInspector
+          Monstey_CoreTests Monstey_GadbTests Monstey_ArchiveTests
+          Monstey_StringsTests Monstey_WorldTests
+          Monstey_WorldPublishedReceiverTests Monstey_WorldReceiverRowsTests
+      - name: Test
+        run: >-
+          ctest --test-dir build -C Release --output-on-failure
+          -R "^(NativeCore|NativeGadb|NativeArchive|NativeStrings|NativeWorld|NativeWorldPublishedReceiver|NativeWorldReceiverRows|NativeWorldHkaiActivationCli|NativePublishedReceiverCli|NativeWorldReceiverRowsCli)$"
+      - name: Package
+        run: cmake --install build --config Release --prefix dist
+      - uses: actions/upload-artifact@v4
+        with:
+          name: SoW-Workbench-windows-x64
+          path: dist/

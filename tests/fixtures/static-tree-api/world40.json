@@ -1,0 +1,3604 @@
+[
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "openWorldHint": false,
+      "readOnlyHint": true
+    },
+    "available": true,
+    "description": "Native C++ world port capabilities",
+    "implementation_language": "C++20",
+    "implemented": true,
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {},
+      "required": [],
+      "type": "object"
+    },
+    "name": "sow_capabilities",
+    "runtime_verified": false,
+    "schema_complete": true,
+    "status": "complete"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "openWorldHint": false,
+      "readOnlyHint": true
+    },
+    "available": true,
+    "description": "Native asset format inspection",
+    "implementation_language": "C++20",
+    "implemented": true,
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "source": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "source"
+      ],
+      "type": "object"
+    },
+    "name": "sow_asset_inspect",
+    "runtime_verified": false,
+    "schema_complete": true,
+    "status": "complete"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "openWorldHint": false,
+      "readOnlyHint": true
+    },
+    "available": true,
+    "description": "Complete OBJR13/OBJL5/ObjectDB envelope and preservation audit",
+    "implementation_language": "C++20",
+    "implemented": true,
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "source": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "source"
+      ],
+      "type": "object"
+    },
+    "name": "sow_objres_inspect",
+    "runtime_verified": false,
+    "schema_complete": true,
+    "status": "complete"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "openWorldHint": false,
+      "readOnlyHint": true
+    },
+    "available": true,
+    "description": "Bounded native object/property query",
+    "implementation_language": "C++20",
+    "implemented": true,
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "class_name": {
+          "type": "string"
+        },
+        "include_properties": {
+          "type": "boolean"
+        },
+        "limit": {
+          "default": 100,
+          "maximum": 500,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "name_contains": {
+          "type": "string"
+        },
+        "offset": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "source": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "source"
+      ],
+      "type": "object"
+    },
+    "name": "sow_objres_query",
+    "runtime_verified": false,
+    "schema_complete": true,
+    "status": "complete"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "openWorldHint": false,
+      "readOnlyHint": false
+    },
+    "available": true,
+    "description": "Independent native object authoring with same-class property types",
+    "implementation_language": "C++20",
+    "implemented": true,
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "expected_sha256": {
+          "type": "string"
+        },
+        "objects": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "class_name": {
+                "type": "string"
+              },
+              "group_index": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "name": {
+                "type": "string"
+              },
+              "position": {
+                "items": {
+                  "type": "number"
+                },
+                "maxItems": 3,
+                "minItems": 3,
+                "type": "array"
+              },
+              "properties": {
+                "type": "object"
+              },
+              "property_types": {
+                "additionalProperties": {
+                  "maximum": 255,
+                  "minimum": 1,
+                  "type": "integer"
+                },
+                "type": "object"
+              },
+              "quaternion": {
+                "items": {
+                  "type": "number"
+                },
+                "maxItems": 4,
+                "minItems": 4,
+                "type": "array"
+              },
+              "schema_source": {
+                "description": "Absolute filesystem path",
+                "format": "path",
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "required": [
+              "class_name",
+              "name",
+              "position",
+              "quaternion",
+              "properties"
+            ],
+            "type": "object"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "output": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "report": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "source": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "source",
+        "objects",
+        "output"
+      ],
+      "type": "object"
+    },
+    "name": "sow_objres_add",
+    "runtime_verified": false,
+    "schema_complete": true,
+    "status": "complete"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "openWorldHint": false,
+      "readOnlyHint": false
+    },
+    "available": true,
+    "description": "Existing native object transform update",
+    "implementation_language": "C++20",
+    "implemented": true,
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "expected_sha256": {
+          "type": "string"
+        },
+        "output": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "report": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "source": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "updates": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "class_name": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "position": {
+                "items": {
+                  "type": "number"
+                },
+                "maxItems": 3,
+                "minItems": 3,
+                "type": "array"
+              },
+              "quaternion": {
+                "items": {
+                  "type": "number"
+                },
+                "maxItems": 4,
+                "minItems": 4,
+                "type": "array"
+              }
+            },
+            "required": [
+              "name",
+              "position",
+              "quaternion"
+            ],
+            "type": "object"
+          },
+          "minItems": 1,
+          "type": "array"
+        }
+      },
+      "required": [
+        "source",
+        "updates",
+        "output"
+      ],
+      "type": "object"
+    },
+    "name": "sow_objres_apply",
+    "runtime_verified": false,
+    "schema_complete": true,
+    "status": "complete"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "openWorldHint": false,
+      "readOnlyHint": false
+    },
+    "available": true,
+    "description": "Byte-exact OBJRES reconstruction",
+    "implementation_language": "C++20",
+    "implemented": true,
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "output": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "report": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "source": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "source"
+      ],
+      "type": "object"
+    },
+    "name": "sow_objres_roundtrip",
+    "runtime_verified": false,
+    "schema_complete": true,
+    "status": "complete"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "openWorldHint": false,
+      "readOnlyHint": true
+    },
+    "available": true,
+    "description": "Native PRFB8 definitions, geometry and instance inspection",
+    "implementation_language": "C++20",
+    "implemented": true,
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "instances_limit": {
+          "default": 100,
+          "maximum": 500,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "source": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "source"
+      ],
+      "type": "object"
+    },
+    "name": "sow_inst_inspect",
+    "runtime_verified": false,
+    "schema_complete": true,
+    "status": "complete"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "openWorldHint": false,
+      "readOnlyHint": false
+    },
+    "available": true,
+    "description": "Complete native PRFB8 ownership, donor and defined-geometry placement authoring",
+    "implementation_language": "C++20",
+    "implemented": true,
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "expected_sha256": {
+          "type": "string"
+        },
+        "output": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "report": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "source": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "spec": {
+          "additionalProperties": false,
+          "properties": {
+            "clones": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "index": {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "owner_definition_key": {
+                    "anyOf": [
+                      {
+                        "maximum": 4294967295,
+                        "minimum": 0,
+                        "type": "integer"
+                      },
+                      {
+                        "type": "string"
+                      }
+                    ]
+                  },
+                  "position": {
+                    "items": {
+                      "type": "number"
+                    },
+                    "maxItems": 3,
+                    "minItems": 3,
+                    "type": "array"
+                  },
+                  "quaternion": {
+                    "items": {
+                      "type": "number"
+                    },
+                    "maxItems": 4,
+                    "minItems": 4,
+                    "type": "array"
+                  },
+                  "scale": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "index"
+                ],
+                "type": "object"
+              },
+              "minItems": 0,
+              "type": "array"
+            },
+            "defined_instances": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "owner_definition_key": {
+                    "anyOf": [
+                      {
+                        "maximum": 4294967295,
+                        "minimum": 0,
+                        "type": "integer"
+                      },
+                      {
+                        "type": "string"
+                      }
+                    ]
+                  },
+                  "placement_donor": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "index": {
+                        "minimum": 0,
+                        "type": "integer"
+                      },
+                      "sha256": {
+                        "type": "string"
+                      },
+                      "source": {
+                        "description": "Absolute filesystem path",
+                        "format": "path",
+                        "minLength": 1,
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "source",
+                      "index"
+                    ],
+                    "type": "object"
+                  },
+                  "position": {
+                    "items": {
+                      "type": "number"
+                    },
+                    "maxItems": 3,
+                    "minItems": 3,
+                    "type": "array"
+                  },
+                  "quaternion": {
+                    "items": {
+                      "type": "number"
+                    },
+                    "maxItems": 4,
+                    "minItems": 4,
+                    "type": "array"
+                  },
+                  "scale": {
+                    "type": "number"
+                  },
+                  "target": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "sha256": {
+                        "type": "string"
+                      },
+                      "source": {
+                        "description": "Absolute filesystem path",
+                        "format": "path",
+                        "minLength": 1,
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "source"
+                    ],
+                    "type": "object"
+                  },
+                  "target_definition_key": {
+                    "anyOf": [
+                      {
+                        "maximum": 4294967295,
+                        "minimum": 0,
+                        "type": "integer"
+                      },
+                      {
+                        "type": "string"
+                      }
+                    ]
+                  },
+                  "target_resource_path": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "target_resource_path",
+                  "position",
+                  "quaternion",
+                  "target",
+                  "placement_donor"
+                ],
+                "type": "object"
+              },
+              "minItems": 0,
+              "type": "array"
+            },
+            "deletes": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "index": {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "owner_definition_key": {
+                    "anyOf": [
+                      {
+                        "maximum": 4294967295,
+                        "minimum": 0,
+                        "type": "integer"
+                      },
+                      {
+                        "type": "string"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "index"
+                ],
+                "type": "object"
+              },
+              "minItems": 0,
+              "type": "array"
+            },
+            "instances": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "donor": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "index": {
+                        "minimum": 0,
+                        "type": "integer"
+                      },
+                      "sha256": {
+                        "type": "string"
+                      },
+                      "source": {
+                        "description": "Absolute filesystem path",
+                        "format": "path",
+                        "minLength": 1,
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "source",
+                      "index"
+                    ],
+                    "type": "object"
+                  },
+                  "owner_definition_key": {
+                    "anyOf": [
+                      {
+                        "maximum": 4294967295,
+                        "minimum": 0,
+                        "type": "integer"
+                      },
+                      {
+                        "type": "string"
+                      }
+                    ]
+                  },
+                  "position": {
+                    "items": {
+                      "type": "number"
+                    },
+                    "maxItems": 3,
+                    "minItems": 3,
+                    "type": "array"
+                  },
+                  "prefab_path": {
+                    "type": "string"
+                  },
+                  "quaternion": {
+                    "items": {
+                      "type": "number"
+                    },
+                    "maxItems": 4,
+                    "minItems": 4,
+                    "type": "array"
+                  },
+                  "scale": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "prefab_path",
+                  "position",
+                  "quaternion"
+                ],
+                "type": "object"
+              },
+              "minItems": 0,
+              "type": "array"
+            },
+            "owner_donor": {
+              "additionalProperties": false,
+              "properties": {
+                "definition_index": {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "sha256": {
+                  "type": "string"
+                },
+                "source": {
+                  "description": "Absolute filesystem path",
+                  "format": "path",
+                  "minLength": 1,
+                  "type": "string"
+                }
+              },
+              "required": [
+                "source"
+              ],
+              "type": "object"
+            },
+            "resource_path": {
+              "type": "string"
+            },
+            "source_sha256": {
+              "type": "string"
+            },
+            "updates": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "index": {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "owner_definition_key": {
+                    "anyOf": [
+                      {
+                        "maximum": 4294967295,
+                        "minimum": 0,
+                        "type": "integer"
+                      },
+                      {
+                        "type": "string"
+                      }
+                    ]
+                  },
+                  "position": {
+                    "items": {
+                      "type": "number"
+                    },
+                    "maxItems": 3,
+                    "minItems": 3,
+                    "type": "array"
+                  },
+                  "quaternion": {
+                    "items": {
+                      "type": "number"
+                    },
+                    "maxItems": 4,
+                    "minItems": 4,
+                    "type": "array"
+                  },
+                  "scale": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "index"
+                ],
+                "type": "object"
+              },
+              "minItems": 0,
+              "type": "array"
+            }
+          },
+          "required": [],
+          "type": "object"
+        }
+      },
+      "required": [
+        "source",
+        "spec",
+        "output"
+      ],
+      "type": "object"
+    },
+    "name": "sow_inst_apply",
+    "runtime_verified": false,
+    "schema_complete": true,
+    "status": "complete"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "openWorldHint": false,
+      "readOnlyHint": false
+    },
+    "available": true,
+    "description": "Byte-exact PRFB8 reconstruction",
+    "implementation_language": "C++20",
+    "implemented": true,
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "output": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "report": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "source": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "source"
+      ],
+      "type": "object"
+    },
+    "name": "sow_inst_roundtrip",
+    "runtime_verified": false,
+    "schema_complete": true,
+    "status": "complete"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "openWorldHint": false,
+      "readOnlyHint": true
+    },
+    "available": true,
+    "description": "Known WDSC9/MESH5/HKAI3/WorldPhysics envelope validation",
+    "implementation_language": "C++20",
+    "implemented": true,
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "format": {
+          "enum": [
+            "WDSC9",
+            "MESH5",
+            "HKAI3",
+            "WorldPhysics"
+          ],
+          "type": "string"
+        },
+        "source": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "source"
+      ],
+      "type": "object"
+    },
+    "name": "sow_section_inspect",
+    "runtime_verified": false,
+    "schema_complete": true,
+    "status": "complete"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "openWorldHint": false,
+      "readOnlyHint": false
+    },
+    "available": true,
+    "description": "Exact section-envelope copy",
+    "implementation_language": "C++20",
+    "implemented": true,
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "format": {
+          "enum": [
+            "WDSC9",
+            "MESH5",
+            "HKAI3",
+            "WorldPhysics"
+          ],
+          "type": "string"
+        },
+        "output": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "report": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "source": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "source",
+        "output"
+      ],
+      "type": "object"
+    },
+    "name": "sow_section_roundtrip",
+    "runtime_verified": false,
+    "schema_complete": true,
+    "status": "complete"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "openWorldHint": false,
+      "readOnlyHint": false
+    },
+    "available": true,
+    "description": "Native single-owner WDSC render binding from explicit donor",
+    "implementation_language": "C++20",
+    "implemented": true,
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "donor": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "inst": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "output": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "owner_key": {
+          "anyOf": [
+            {
+              "maximum": 4294967295,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "string"
+            }
+          ]
+        },
+        "report": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "resource": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "inst",
+        "resource",
+        "owner_key",
+        "donor",
+        "output"
+      ],
+      "type": "object"
+    },
+    "name": "sow_wdsc_binding_build",
+    "runtime_verified": false,
+    "schema_complete": true,
+    "status": "complete"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "openWorldHint": false,
+      "readOnlyHint": false
+    },
+    "available": true,
+    "description": "Private coherent section component composition",
+    "implementation_language": "C++20",
+    "implemented": true,
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "binding_proof": {
+          "format": "path",
+          "type": "string"
+        },
+        "dependencies": {
+          "format": "path",
+          "type": "string"
+        },
+        "inst": {
+          "format": "path",
+          "type": "string"
+        },
+        "marker_name": {
+          "type": "string"
+        },
+        "output": {
+          "format": "path",
+          "type": "string"
+        },
+        "owner_key": {
+          "maximum": 4294967295,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "position": {
+          "items": {
+            "type": "number"
+          },
+          "maxItems": 3,
+          "minItems": 3,
+          "type": "array"
+        },
+        "quaternion": {
+          "items": {
+            "type": "number"
+          },
+          "maxItems": 4,
+          "minItems": 4,
+          "type": "array"
+        },
+        "schema_source": {
+          "format": "path",
+          "type": "string"
+        },
+        "stem": {
+          "type": "string"
+        },
+        "template": {
+          "format": "path",
+          "type": "string"
+        },
+        "wldclnt": {
+          "format": "path",
+          "type": "string"
+        }
+      },
+      "required": [
+        "template",
+        "inst",
+        "dependencies",
+        "wldclnt",
+        "binding_proof",
+        "owner_key",
+        "stem",
+        "output",
+        "position"
+      ],
+      "type": "object"
+    },
+    "name": "sow_private_section_build",
+    "runtime_verified": false,
+    "schema_complete": true,
+    "status": "complete"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "openWorldHint": false,
+      "readOnlyHint": false
+    },
+    "available": true,
+    "description": "Rigid MMSH-to-PRFB conversion",
+    "implementation_language": "C++20",
+    "implemented": true,
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "container": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "dependency_manifests": {
+          "items": {
+            "description": "Absolute filesystem path",
+            "format": "path",
+            "minLength": 1,
+            "type": "string"
+          },
+          "minItems": 0,
+          "type": "array"
+        },
+        "expected_sha256": {
+          "type": "string"
+        },
+        "material": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "material_path": {
+          "type": "string"
+        },
+        "output": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "resource_path": {
+          "type": "string"
+        },
+        "shader": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "shader_contract": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "source": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "template": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "template_expected_sha256": {
+          "type": "string"
+        },
+        "texture_manifest": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "source",
+        "material",
+        "shader",
+        "template",
+        "output",
+        "resource_path",
+        "material_path",
+        "texture_manifest"
+      ],
+      "type": "object"
+    },
+    "name": "sow_static_prefab_convert",
+    "runtime_verified": false,
+    "schema_complete": true,
+    "status": "complete"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "openWorldHint": false,
+      "readOnlyHint": false
+    },
+    "available": true,
+    "description": "Native keep Blender scene JSON preparation",
+    "implementation_language": "C++20",
+    "implemented": true,
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "game_root": {
+          "format": "path",
+          "type": "string"
+        },
+        "oodle_dll": {
+          "format": "path",
+          "type": "string"
+        },
+        "output": {
+          "format": "path",
+          "type": "string"
+        },
+        "region": {
+          "enum": [
+            "island",
+            "mtnpass",
+            "snowmtn",
+            "volcano",
+            "desert"
+          ],
+          "type": "string"
+        },
+        "spec": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "region",
+        "output"
+      ],
+      "type": "object"
+    },
+    "name": "sow_blender_prepare",
+    "runtime_verified": false,
+    "schema_complete": true,
+    "status": "complete"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "openWorldHint": false,
+      "readOnlyHint": false
+    },
+    "available": true,
+    "description": "Blender scene prefab attachment",
+    "implementation_language": "C++20",
+    "implemented": true,
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "frame": {
+          "enum": [
+            "world",
+            "local"
+          ],
+          "type": "string"
+        },
+        "frame_to_scene": {
+          "type": "object"
+        },
+        "output": {
+          "format": "path",
+          "type": "string"
+        },
+        "resource_path": {
+          "type": "string"
+        },
+        "scene": {
+          "format": "path",
+          "type": "string"
+        },
+        "source": {
+          "format": "path",
+          "type": "string"
+        }
+      },
+      "required": [
+        "scene",
+        "source",
+        "resource_path",
+        "frame",
+        "output"
+      ],
+      "type": "object"
+    },
+    "name": "sow_blender_attach_inst",
+    "runtime_verified": false,
+    "schema_complete": true,
+    "status": "complete"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "openWorldHint": false,
+      "readOnlyHint": false
+    },
+    "available": true,
+    "description": "Blender native world scene build",
+    "implementation_language": "C++20",
+    "implemented": true,
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "blend_template": {
+          "format": "path",
+          "type": "string"
+        },
+        "blender": {
+          "format": "path",
+          "type": "string"
+        },
+        "output_dir": {
+          "format": "path",
+          "type": "string"
+        },
+        "render": {
+          "type": "boolean"
+        },
+        "scene": {
+          "format": "path",
+          "type": "string"
+        }
+      },
+      "required": [
+        "scene",
+        "output_dir"
+      ],
+      "type": "object"
+    },
+    "name": "sow_blender_build",
+    "runtime_verified": false,
+    "schema_complete": true,
+    "status": "complete"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "openWorldHint": false,
+      "readOnlyHint": false
+    },
+    "available": true,
+    "description": "Blender world edit export",
+    "implementation_language": "C++20",
+    "implemented": true,
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "blend": {
+          "format": "path",
+          "type": "string"
+        },
+        "output_dir": {
+          "format": "path",
+          "type": "string"
+        }
+      },
+      "required": [
+        "blend",
+        "output_dir"
+      ],
+      "type": "object"
+    },
+    "name": "sow_blender_export",
+    "runtime_verified": false,
+    "schema_complete": true,
+    "status": "complete"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "openWorldHint": false,
+      "readOnlyHint": true
+    },
+    "available": true,
+    "description": "Blender native edit validation",
+    "implementation_language": "C++20",
+    "implemented": true,
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "spec": {
+          "format": "path",
+          "type": "string"
+        }
+      },
+      "required": [
+        "spec"
+      ],
+      "type": "object"
+    },
+    "name": "sow_blender_validate",
+    "runtime_verified": false,
+    "schema_complete": true,
+    "status": "complete"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "openWorldHint": false,
+      "readOnlyHint": true
+    },
+    "available": true,
+    "description": "Native asset catalogue search",
+    "implementation_language": "C++20",
+    "implemented": true,
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "bundle_contains": {
+          "type": "string"
+        },
+        "catalog": {
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "limit": {
+          "maximum": 500,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "manifests": {
+          "items": {
+            "format": "path",
+            "minLength": 1,
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "offset": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "path_contains": {
+          "type": "string"
+        },
+        "suffix": {
+          "type": "string"
+        }
+      },
+      "required": [],
+      "type": "object"
+    },
+    "name": "sow_world_asset_search",
+    "runtime_verified": false,
+    "schema_complete": true,
+    "status": "complete"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "openWorldHint": false,
+      "readOnlyHint": false
+    },
+    "available": true,
+    "description": "Selective native world asset extraction",
+    "implementation_language": "C++20",
+    "implemented": true,
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "game_root": {
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "max_total_bytes": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "oodle_dll": {
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "output": {
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "requests": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "bundle": {
+                "type": "string"
+              },
+              "resource_path": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "resource_path"
+            ],
+            "type": "object"
+          },
+          "minItems": 1,
+          "type": "array"
+        }
+      },
+      "required": [
+        "requests",
+        "output"
+      ],
+      "type": "object"
+    },
+    "name": "sow_world_asset_extract",
+    "runtime_verified": false,
+    "schema_complete": true,
+    "status": "complete"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "openWorldHint": false,
+      "readOnlyHint": true
+    },
+    "available": true,
+    "description": "Native class and actual property type discovery",
+    "implementation_language": "C++20",
+    "implemented": true,
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "class_name": {
+          "type": "string"
+        },
+        "source": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "source"
+      ],
+      "type": "object"
+    },
+    "name": "sow_objres_classes",
+    "runtime_verified": false,
+    "schema_complete": true,
+    "status": "complete"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "openWorldHint": false,
+      "readOnlyHint": false
+    },
+    "available": true,
+    "description": "Native object/property CRUD and linked identity validation",
+    "implementation_language": "C++20",
+    "implemented": true,
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "output": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "report": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "source": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "spec": {
+          "additionalProperties": false,
+          "properties": {
+            "clones": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "group_index": {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "position": {
+                    "items": {
+                      "type": "number"
+                    },
+                    "maxItems": 3,
+                    "minItems": 3,
+                    "type": "array"
+                  },
+                  "properties": {
+                    "type": "object"
+                  },
+                  "property_types": {
+                    "additionalProperties": {
+                      "maximum": 255,
+                      "minimum": 1,
+                      "type": "integer"
+                    },
+                    "type": "object"
+                  },
+                  "quaternion": {
+                    "items": {
+                      "type": "number"
+                    },
+                    "maxItems": 4,
+                    "minItems": 4,
+                    "type": "array"
+                  },
+                  "remove_properties": {
+                    "items": {
+                      "type": "string"
+                    },
+                    "minItems": 0,
+                    "type": "array"
+                  },
+                  "schema_source": {
+                    "description": "Absolute filesystem path",
+                    "format": "path",
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "source_group_index": {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "source_name": {
+                    "type": "string"
+                  },
+                  "source_object_index": {
+                    "minimum": 0,
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "source_name",
+                  "name"
+                ],
+                "type": "object"
+              },
+              "minItems": 0,
+              "type": "array"
+            },
+            "deletes": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "class_name": {
+                    "type": "string"
+                  },
+                  "group_index": {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "object_index": {
+                    "minimum": 0,
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "name"
+                ],
+                "type": "object"
+              },
+              "minItems": 0,
+              "type": "array"
+            },
+            "objects": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "class_name": {
+                    "type": "string"
+                  },
+                  "group_index": {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "position": {
+                    "items": {
+                      "type": "number"
+                    },
+                    "maxItems": 3,
+                    "minItems": 3,
+                    "type": "array"
+                  },
+                  "properties": {
+                    "type": "object"
+                  },
+                  "property_types": {
+                    "additionalProperties": {
+                      "maximum": 255,
+                      "minimum": 1,
+                      "type": "integer"
+                    },
+                    "type": "object"
+                  },
+                  "quaternion": {
+                    "items": {
+                      "type": "number"
+                    },
+                    "maxItems": 4,
+                    "minItems": 4,
+                    "type": "array"
+                  },
+                  "schema_source": {
+                    "description": "Absolute filesystem path",
+                    "format": "path",
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "class_name",
+                  "name",
+                  "position",
+                  "quaternion",
+                  "properties"
+                ],
+                "type": "object"
+              },
+              "minItems": 0,
+              "type": "array"
+            },
+            "source_sha256": {
+              "type": "string"
+            },
+            "updates": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "class_name": {
+                    "type": "string"
+                  },
+                  "group_index": {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "object_index": {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "position": {
+                    "items": {
+                      "type": "number"
+                    },
+                    "maxItems": 3,
+                    "minItems": 3,
+                    "type": "array"
+                  },
+                  "properties": {
+                    "type": "object"
+                  },
+                  "property_types": {
+                    "additionalProperties": {
+                      "maximum": 255,
+                      "minimum": 1,
+                      "type": "integer"
+                    },
+                    "type": "object"
+                  },
+                  "quaternion": {
+                    "items": {
+                      "type": "number"
+                    },
+                    "maxItems": 4,
+                    "minItems": 4,
+                    "type": "array"
+                  },
+                  "remove_properties": {
+                    "items": {
+                      "type": "string"
+                    },
+                    "minItems": 0,
+                    "type": "array"
+                  },
+                  "rename_to": {
+                    "type": "string"
+                  },
+                  "schema_source": {
+                    "description": "Absolute filesystem path",
+                    "format": "path",
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name"
+                ],
+                "type": "object"
+              },
+              "minItems": 0,
+              "type": "array"
+            }
+          },
+          "required": [],
+          "type": "object"
+        }
+      },
+      "required": [
+        "source",
+        "spec",
+        "output"
+      ],
+      "type": "object"
+    },
+    "name": "sow_objres_edit",
+    "runtime_verified": false,
+    "schema_complete": true,
+    "status": "complete"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "openWorldHint": false,
+      "readOnlyHint": false
+    },
+    "available": true,
+    "description": "Multi-source native world scene preparation",
+    "implementation_language": "C++20",
+    "implemented": true,
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "output": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "spec": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "spec",
+        "output"
+      ],
+      "type": "object"
+    },
+    "name": "sow_world_scene_prepare",
+    "runtime_verified": false,
+    "schema_complete": true,
+    "status": "complete"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "openWorldHint": false,
+      "readOnlyHint": true
+    },
+    "available": true,
+    "description": "Full native MESH5 vertex, indices, layouts and draw alias decoder",
+    "implementation_language": "C++20",
+    "implemented": true,
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "source": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "source"
+      ],
+      "type": "object"
+    },
+    "name": "sow_worldmesh_inspect",
+    "runtime_verified": false,
+    "schema_complete": true,
+    "status": "complete"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "openWorldHint": false,
+      "readOnlyHint": false
+    },
+    "available": true,
+    "description": "Exact raw encoded native geometry standard ZIP/NPY NPZ export",
+    "implementation_language": "C++20",
+    "implemented": true,
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "draw_index": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "group_index": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "output": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "source": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "source",
+        "output"
+      ],
+      "type": "object"
+    },
+    "name": "sow_worldmesh_export",
+    "runtime_verified": false,
+    "schema_complete": true,
+    "status": "complete"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "openWorldHint": false,
+      "readOnlyHint": false
+    },
+    "available": true,
+    "description": "Complete native MESH5 transforms, NPZ interchange and topology authoring",
+    "implementation_language": "C++20",
+    "implemented": true,
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "output": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "report": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "source": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "spec": {
+          "additionalProperties": false,
+          "properties": {
+            "source_sha256": {
+              "type": "string"
+            },
+            "topology": {
+              "additionalProperties": false,
+              "properties": {
+                "append_groups": {
+                  "items": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "draws": {
+                        "items": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "attributes_npz": {
+                              "description": "Absolute filesystem path",
+                              "format": "path",
+                              "minLength": 1,
+                              "type": "string"
+                            },
+                            "material": {
+                              "type": "string"
+                            },
+                            "source_draw": {
+                              "minimum": 0,
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "source_draw"
+                          ],
+                          "type": "object"
+                        },
+                        "minItems": 0,
+                        "type": "array"
+                      },
+                      "template_group": {
+                        "minimum": 0,
+                        "type": "integer"
+                      }
+                    },
+                    "required": [
+                      "template_group",
+                      "draws"
+                    ],
+                    "type": "object"
+                  },
+                  "minItems": 0,
+                  "type": "array"
+                },
+                "groups": {
+                  "items": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "draws": {
+                        "items": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "attributes_npz": {
+                              "description": "Absolute filesystem path",
+                              "format": "path",
+                              "minLength": 1,
+                              "type": "string"
+                            },
+                            "material": {
+                              "type": "string"
+                            },
+                            "source_draw": {
+                              "minimum": 0,
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "source_draw"
+                          ],
+                          "type": "object"
+                        },
+                        "minItems": 0,
+                        "type": "array"
+                      },
+                      "group_index": {
+                        "minimum": 0,
+                        "type": "integer"
+                      }
+                    },
+                    "required": [
+                      "group_index",
+                      "draws"
+                    ],
+                    "type": "object"
+                  },
+                  "minItems": 0,
+                  "type": "array"
+                },
+                "source_sha256": {
+                  "type": "string"
+                }
+              },
+              "required": [],
+              "type": "object"
+            },
+            "updates": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "attributes_npz": {
+                    "description": "Absolute filesystem path",
+                    "format": "path",
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "draw_index": {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "group_index": {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "quaternion": {
+                    "items": {
+                      "type": "number"
+                    },
+                    "maxItems": 4,
+                    "minItems": 4,
+                    "type": "array"
+                  },
+                  "scale": {
+                    "exclusiveMinimum": 0,
+                    "type": "number"
+                  },
+                  "translation": {
+                    "items": {
+                      "type": "number"
+                    },
+                    "maxItems": 3,
+                    "minItems": 3,
+                    "type": "array"
+                  }
+                },
+                "required": [
+                  "group_index",
+                  "draw_index"
+                ],
+                "type": "object"
+              },
+              "minItems": 0,
+              "type": "array"
+            }
+          },
+          "required": [],
+          "type": "object"
+        }
+      },
+      "required": [
+        "source",
+        "spec",
+        "output"
+      ],
+      "type": "object"
+    },
+    "name": "sow_worldmesh_apply",
+    "runtime_verified": false,
+    "schema_complete": true,
+    "status": "complete"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "openWorldHint": false,
+      "readOnlyHint": true
+    },
+    "available": true,
+    "description": "Full native collision shapes and mappings",
+    "implementation_language": "C++20",
+    "implemented": true,
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "expected_sha256": {
+          "type": "string"
+        },
+        "limit": {
+          "default": 100,
+          "maximum": 500,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "offset": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "source": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "source"
+      ],
+      "type": "object"
+    },
+    "name": "sow_world_physics_inspect",
+    "runtime_verified": false,
+    "schema_complete": true,
+    "status": "complete"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "openWorldHint": false,
+      "readOnlyHint": false
+    },
+    "available": true,
+    "description": "Native collision transform, owner and clone edits",
+    "implementation_language": "C++20",
+    "implemented": true,
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "expected_sha256": {
+          "type": "string"
+        },
+        "limit": {
+          "default": 100,
+          "maximum": 500,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "offset": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "output": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "report": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "source": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "spec": {
+          "additionalProperties": false,
+          "properties": {
+            "boxes": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "half_extents_cm": {
+                    "items": {
+                      "type": "number"
+                    },
+                    "maxItems": 3,
+                    "minItems": 3,
+                    "type": "array"
+                  },
+                  "index": {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "route": {
+                    "items": {
+                      "minimum": 0,
+                      "type": "integer"
+                    },
+                    "minItems": 0,
+                    "type": "array"
+                  }
+                },
+                "required": [
+                  "index",
+                  "half_extents_cm"
+                ],
+                "type": "object"
+              },
+              "minItems": 0,
+              "type": "array"
+            },
+            "clone_owners": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "delta_cm": {
+                    "items": {
+                      "type": "number"
+                    },
+                    "maxItems": 3,
+                    "minItems": 3,
+                    "type": "array"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "new_name": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name",
+                  "new_name",
+                  "delta_cm"
+                ],
+                "type": "object"
+              },
+              "minItems": 0,
+              "type": "array"
+            },
+            "import_owners": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "donor": {
+                    "description": "Absolute filesystem path",
+                    "format": "path",
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "donor_name": {
+                    "type": "string"
+                  },
+                  "group_index": {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "new_name": {
+                    "type": "string"
+                  },
+                  "position_cm": {
+                    "items": {
+                      "type": "number"
+                    },
+                    "maxItems": 3,
+                    "minItems": 3,
+                    "type": "array"
+                  },
+                  "properties": {
+                    "type": [
+                      "object",
+                      "null"
+                    ]
+                  },
+                  "quaternion_xyzw": {
+                    "items": {
+                      "type": "number"
+                    },
+                    "maxItems": 4,
+                    "minItems": 4,
+                    "type": "array"
+                  }
+                },
+                "required": [
+                  "donor",
+                  "donor_name",
+                  "new_name",
+                  "position_cm",
+                  "quaternion_xyzw"
+                ],
+                "type": "object"
+              },
+              "minItems": 0,
+              "type": "array"
+            },
+            "rename_owners": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "new_name": {
+                    "type": "string"
+                  },
+                  "old_name": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "old_name",
+                  "new_name"
+                ],
+                "type": "object"
+              },
+              "minItems": 0,
+              "type": "array"
+            },
+            "source_sha256": {
+              "type": "string"
+            },
+            "transforms": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "index": {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "position_cm": {
+                    "items": {
+                      "type": "number"
+                    },
+                    "maxItems": 3,
+                    "minItems": 3,
+                    "type": "array"
+                  },
+                  "quaternion_xyzw": {
+                    "items": {
+                      "type": "number"
+                    },
+                    "maxItems": 4,
+                    "minItems": 4,
+                    "type": "array"
+                  },
+                  "route": {
+                    "items": {
+                      "minimum": 0,
+                      "type": "integer"
+                    },
+                    "minItems": 0,
+                    "type": [
+                      "array",
+                      "null"
+                    ]
+                  }
+                },
+                "required": [
+                  "index",
+                  "position_cm",
+                  "quaternion_xyzw"
+                ],
+                "type": "object"
+              },
+              "minItems": 0,
+              "type": "array"
+            }
+          },
+          "required": [],
+          "type": "object"
+        }
+      },
+      "required": [
+        "source",
+        "spec",
+        "output"
+      ],
+      "type": "object"
+    },
+    "name": "sow_world_physics_apply",
+    "runtime_verified": false,
+    "schema_complete": true,
+    "status": "complete"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "openWorldHint": false,
+      "readOnlyHint": true
+    },
+    "available": true,
+    "description": "Full HKAI topology, ownership and clearance inspection",
+    "implementation_language": "C++20",
+    "implemented": true,
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "owner": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "source": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "source"
+      ],
+      "type": "object"
+    },
+    "name": "sow_world_navigation_inspect",
+    "runtime_verified": false,
+    "schema_complete": true,
+    "status": "complete"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "openWorldHint": false,
+      "readOnlyHint": false
+    },
+    "available": true,
+    "description": "Native navigation dynamic-piece transform/clone",
+    "implementation_language": "C++20",
+    "implemented": true,
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "output": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "owner": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "owner_output": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "report": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "source": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "spec": {
+          "additionalProperties": false,
+          "properties": {
+            "clone_pieces": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "delta_cm": {
+                    "items": {
+                      "type": "number"
+                    },
+                    "maxItems": 3,
+                    "minItems": 3,
+                    "type": "array"
+                  },
+                  "index": {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "new_name": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "index",
+                  "new_name",
+                  "delta_cm"
+                ],
+                "type": "object"
+              },
+              "minItems": 0,
+              "type": "array"
+            },
+            "owner_source_sha256": {
+              "type": "string"
+            },
+            "source_sha256": {
+              "type": "string"
+            },
+            "translate_pieces": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "delta_cm": {
+                    "items": {
+                      "type": "number"
+                    },
+                    "maxItems": 3,
+                    "minItems": 3,
+                    "type": "array"
+                  },
+                  "index": {
+                    "minimum": 0,
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "index",
+                  "delta_cm"
+                ],
+                "type": "object"
+              },
+              "minItems": 0,
+              "type": "array"
+            }
+          },
+          "required": [],
+          "type": "object"
+        }
+      },
+      "required": [
+        "source",
+        "owner",
+        "spec",
+        "output",
+        "owner_output"
+      ],
+      "type": "object"
+    },
+    "name": "sow_world_navigation_apply",
+    "runtime_verified": false,
+    "schema_complete": true,
+    "status": "complete"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "openWorldHint": false,
+      "readOnlyHint": false
+    },
+    "available": true,
+    "description": "Coherent world edit bundle composition",
+    "implementation_language": "C++20",
+    "implemented": true,
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "output": {
+          "format": "path",
+          "type": "string"
+        },
+        "plan": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "plan"
+      ],
+      "type": "object"
+    },
+    "name": "sow_worldedit_compile",
+    "runtime_verified": false,
+    "schema_complete": true,
+    "status": "complete"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "openWorldHint": false,
+      "readOnlyHint": false
+    },
+    "available": true,
+    "description": "Exact native box collision and spatial registration",
+    "implementation_language": "C++20",
+    "implemented": true,
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "expected_sha256": {
+          "type": "string"
+        },
+        "output": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "profile_source": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "report": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "source": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "spec": {
+          "additionalProperties": false,
+          "properties": {
+            "boxes": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "center_cm": {
+                    "items": {
+                      "type": "number"
+                    },
+                    "maxItems": 3,
+                    "minItems": 3,
+                    "type": "array"
+                  },
+                  "half_extents_cm": {
+                    "items": {
+                      "maximum": 1000000000,
+                      "minimum": 0.5,
+                      "type": "number"
+                    },
+                    "maxItems": 3,
+                    "minItems": 3,
+                    "type": "array"
+                  },
+                  "name": {
+                    "maxLength": 255,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "quaternion_xyzw": {
+                    "items": {
+                      "type": "number"
+                    },
+                    "maxItems": 4,
+                    "minItems": 4,
+                    "type": "array"
+                  }
+                },
+                "required": [
+                  "name",
+                  "center_cm",
+                  "half_extents_cm"
+                ],
+                "type": "object"
+              },
+              "maxItems": 4096,
+              "minItems": 1,
+              "type": "array"
+            },
+            "owner": {
+              "type": "string"
+            },
+            "placement": {
+              "additionalProperties": false,
+              "properties": {
+                "position_cm": {
+                  "items": {
+                    "type": "number"
+                  },
+                  "maxItems": 3,
+                  "minItems": 3,
+                  "type": "array"
+                },
+                "quaternion_xyzw": {
+                  "items": {
+                    "type": "number"
+                  },
+                  "maxItems": 4,
+                  "minItems": 4,
+                  "type": "array"
+                }
+              },
+              "required": [],
+              "type": "object"
+            },
+            "profile": {
+              "additionalProperties": false,
+              "properties": {
+                "route": {
+                  "items": {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "maxItems": 64,
+                  "minItems": 0,
+                  "type": "array"
+                },
+                "shape_index": {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "source_sha256": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "source_sha256",
+                "shape_index"
+              ],
+              "type": "object"
+            },
+            "schema": {
+              "const": "Monstey_WorldCollisionAuthor_1"
+            },
+            "source_sha256": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "source_sha256",
+            "profile",
+            "boxes"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "source",
+        "profile_source",
+        "spec",
+        "output"
+      ],
+      "type": "object"
+    },
+    "name": "sow_world_collision_boxes_build",
+    "runtime_verified": false,
+    "schema_complete": true,
+    "status": "complete"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "openWorldHint": false,
+      "readOnlyHint": false
+    },
+    "available": true,
+    "description": "Exact native compressed triangle collision and BVHs",
+    "implementation_language": "C++20",
+    "implemented": true,
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "expected_sha256": {
+          "type": "string"
+        },
+        "output": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "profile_donor": {
+          "additionalProperties": false,
+          "properties": {
+            "route": {
+              "items": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "maxItems": 64,
+              "minItems": 0,
+              "type": "array"
+            },
+            "shape_index": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "source_sha256": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "source_sha256",
+            "shape_index"
+          ],
+          "type": "object"
+        },
+        "profile_donor_source": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "profile_source": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "report": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "source": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "spec": {
+          "additionalProperties": false,
+          "properties": {
+            "max_error_cm": {
+              "exclusiveMinimum": 0,
+              "maximum": 10,
+              "type": "number"
+            },
+            "owner": {
+              "type": "string"
+            },
+            "placement": {
+              "additionalProperties": false,
+              "properties": {
+                "position_cm": {
+                  "items": {
+                    "type": "number"
+                  },
+                  "maxItems": 3,
+                  "minItems": 3,
+                  "type": "array"
+                },
+                "quaternion_xyzw": {
+                  "items": {
+                    "type": "number"
+                  },
+                  "maxItems": 4,
+                  "minItems": 4,
+                  "type": "array"
+                }
+              },
+              "required": [],
+              "type": "object"
+            },
+            "profile": {
+              "additionalProperties": false,
+              "properties": {
+                "route": {
+                  "items": {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "maxItems": 64,
+                  "minItems": 0,
+                  "type": "array"
+                },
+                "shape_index": {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "source_sha256": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "source_sha256",
+                "shape_index"
+              ],
+              "type": "object"
+            },
+            "schema": {
+              "const": "Monstey_WorldTriangleCollision_1"
+            },
+            "source_sha256": {
+              "type": "string"
+            },
+            "triangles": {
+              "items": {
+                "items": {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "maxItems": 3,
+                "minItems": 3,
+                "type": "array"
+              },
+              "maxItems": 65536,
+              "minItems": 1,
+              "type": "array"
+            },
+            "vertices_cm": {
+              "items": {
+                "items": {
+                  "type": "number"
+                },
+                "maxItems": 3,
+                "minItems": 3,
+                "type": "array"
+              },
+              "maxItems": 65535,
+              "minItems": 3,
+              "type": "array"
+            }
+          },
+          "required": [
+            "source_sha256",
+            "profile",
+            "vertices_cm",
+            "triangles"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "source",
+        "profile_source",
+        "spec",
+        "output"
+      ],
+      "type": "object"
+    },
+    "name": "sow_world_collision_triangles_build",
+    "runtime_verified": false,
+    "schema_complete": true,
+    "status": "complete"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "openWorldHint": false,
+      "readOnlyHint": false
+    },
+    "available": true,
+    "description": "Native HKAI walkable surface authoring and adjacency",
+    "implementation_language": "C++20",
+    "implemented": true,
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "cache_template": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "output": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "owner": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "owner_expected_sha256": {
+          "type": "string"
+        },
+        "report": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "source": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "spec": {
+          "additionalProperties": false,
+          "properties": {
+            "actor": {
+              "additionalProperties": false,
+              "properties": {
+                "height_cm": {
+                  "exclusiveMinimum": 0,
+                  "maximum": 1000000000,
+                  "type": "number"
+                },
+                "max_slope_degrees": {
+                  "exclusiveMaximum": 89,
+                  "minimum": 0,
+                  "type": "number"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "radius_cm": {
+                  "exclusiveMinimum": 0,
+                  "maximum": 1000000000,
+                  "type": "number"
+                }
+              },
+              "required": [
+                "radius_cm",
+                "height_cm"
+              ],
+              "type": "object"
+            },
+            "cache_template_sha256": {
+              "type": "string"
+            },
+            "headroom_cm": {
+              "exclusiveMinimum": 0,
+              "maximum": 1000000000,
+              "type": "number"
+            },
+            "input_space": {
+              "enum": [
+                "mesh_local",
+                "world"
+              ]
+            },
+            "mesh_index": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "mode": {
+              "enum": [
+                "append",
+                "replace"
+              ]
+            },
+            "require_connection": {
+              "type": "boolean"
+            },
+            "routes": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "points_cm": {
+                    "items": {
+                      "items": {
+                        "type": "number"
+                      },
+                      "maxItems": 3,
+                      "minItems": 3,
+                      "type": "array"
+                    },
+                    "maxItems": 100000,
+                    "minItems": 2,
+                    "type": "array"
+                  },
+                  "require_pass": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "name",
+                  "points_cm"
+                ],
+                "type": "object"
+              },
+              "maxItems": 1024,
+              "minItems": 0,
+              "type": "array"
+            },
+            "source_sha256": {
+              "type": "string"
+            },
+            "triangles": {
+              "items": {
+                "items": {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "maxItems": 3,
+                "minItems": 3,
+                "type": "array"
+              },
+              "maxItems": 1000000,
+              "minItems": 1,
+              "type": "array"
+            },
+            "vertices_cm": {
+              "items": {
+                "items": {
+                  "type": "number"
+                },
+                "maxItems": 3,
+                "minItems": 3,
+                "type": "array"
+              },
+              "maxItems": 1000000,
+              "minItems": 3,
+              "type": "array"
+            },
+            "weld_cm": {
+              "exclusiveMinimum": 0,
+              "maximum": 100,
+              "type": "number"
+            }
+          },
+          "required": [
+            "source_sha256",
+            "vertices_cm",
+            "triangles",
+            "actor",
+            "headroom_cm"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "source",
+        "spec",
+        "output"
+      ],
+      "type": "object"
+    },
+    "name": "sow_world_navigation_build",
+    "runtime_verified": false,
+    "schema_complete": true,
+    "status": "complete"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "openWorldHint": false,
+      "readOnlyHint": false
+    },
+    "available": true,
+    "description": "Arbitrary MESH5 topology and qualified common-context WDSC",
+    "implementation_language": "C++20",
+    "implemented": false,
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "expected_sha256": {
+          "type": "string"
+        },
+        "merge_sources": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "mesh_expected_sha256": {
+                "type": "string"
+              },
+              "mesh_source": {
+                "description": "Absolute filesystem path",
+                "format": "path",
+                "minLength": 1,
+                "type": "string"
+              },
+              "render_expected_sha256": {
+                "type": "string"
+              },
+              "render_source": {
+                "description": "Absolute filesystem path",
+                "format": "path",
+                "minLength": 1,
+                "type": "string"
+              },
+              "source_resource": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "mesh_source",
+              "mesh_expected_sha256",
+              "render_source",
+              "render_expected_sha256",
+              "source_resource"
+            ],
+            "type": "object"
+          },
+          "maxItems": 63,
+          "minItems": 1,
+          "type": "array"
+        },
+        "output": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "render_expected_sha256": {
+          "type": "string"
+        },
+        "render_mode": {
+          "default": "private",
+          "enum": [
+            "private",
+            "preserve-section"
+          ],
+          "type": "string"
+        },
+        "render_output": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "render_source": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "report": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "scene_expected_sha256": {
+          "type": "string"
+        },
+        "scene_template": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "source": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "source_resource": {
+          "type": "string"
+        },
+        "spec": {
+          "additionalProperties": false,
+          "properties": {
+            "append_groups": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "draws": {
+                    "items": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "attributes_npz": {
+                          "description": "Absolute filesystem path",
+                          "format": "path",
+                          "minLength": 1,
+                          "type": "string"
+                        },
+                        "material": {
+                          "type": "string"
+                        },
+                        "source_draw": {
+                          "minimum": 0,
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "source_draw"
+                      ],
+                      "type": "object"
+                    },
+                    "minItems": 0,
+                    "type": "array"
+                  },
+                  "template_group": {
+                    "minimum": 0,
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "template_group",
+                  "draws"
+                ],
+                "type": "object"
+              },
+              "minItems": 0,
+              "type": "array"
+            },
+            "groups": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "draws": {
+                    "items": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "attributes_npz": {
+                          "description": "Absolute filesystem path",
+                          "format": "path",
+                          "minLength": 1,
+                          "type": "string"
+                        },
+                        "material": {
+                          "type": "string"
+                        },
+                        "source_draw": {
+                          "minimum": 0,
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "source_draw"
+                      ],
+                      "type": "object"
+                    },
+                    "minItems": 0,
+                    "type": "array"
+                  },
+                  "group_index": {
+                    "minimum": 0,
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "group_index",
+                  "draws"
+                ],
+                "type": "object"
+              },
+              "minItems": 0,
+              "type": "array"
+            },
+            "source_sha256": {
+              "type": "string"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "target_resource": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "source",
+        "spec",
+        "expected_sha256",
+        "output"
+      ],
+      "type": "object"
+    },
+    "name": "sow_world_topology_build",
+    "runtime_verified": false,
+    "schema_complete": true,
+    "status": "partial"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "openWorldHint": false,
+      "readOnlyHint": true
+    },
+    "available": true,
+    "description": "Complete WDSC render dictionaries and scene associations",
+    "implementation_language": "C++20",
+    "implemented": true,
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "source": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "source"
+      ],
+      "type": "object"
+    },
+    "name": "sow_world_render_inspect",
+    "runtime_verified": false,
+    "schema_complete": true,
+    "status": "complete"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "openWorldHint": false,
+      "readOnlyHint": false
+    },
+    "available": true,
+    "description": "Indexed-draw WDSC authoring; multi-context and changed LOD mapping pending",
+    "implementation_language": "C++20",
+    "implemented": false,
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "mesh_expected_sha256": {
+          "type": "string"
+        },
+        "mesh_source": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "mode": {
+          "default": "private",
+          "enum": [
+            "private",
+            "preserve-section"
+          ],
+          "type": "string"
+        },
+        "output": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "render_expected_sha256": {
+          "type": "string"
+        },
+        "render_source": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "report": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "scene_expected_sha256": {
+          "type": "string"
+        },
+        "scene_template": {
+          "description": "Absolute filesystem path",
+          "format": "path",
+          "minLength": 1,
+          "type": "string"
+        },
+        "source_resource": {
+          "type": "string"
+        },
+        "target_resource": {
+          "type": "string"
+        },
+        "topology": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "mesh_source",
+        "mesh_expected_sha256",
+        "topology",
+        "render_source",
+        "render_expected_sha256",
+        "source_resource",
+        "target_resource",
+        "output"
+      ],
+      "type": "object"
+    },
+    "name": "sow_world_render_build",
+    "runtime_verified": false,
+    "schema_complete": true,
+    "status": "partial"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "openWorldHint": false,
+      "readOnlyHint": false
+    },
+    "available": true,
+    "description": "Native Point/Spot light FX and owner authoring",
+    "implementation_language": "C++20",
+    "implemented": true,
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "output": {
+          "format": "path",
+          "type": "string"
+        },
+        "source": {
+          "format": "path",
+          "type": "string"
+        },
+        "spec": {
+          "additionalProperties": false,
+          "properties": {
+            "color_rgb": {
+              "items": {
+                "maximum": 1,
+                "minimum": 0,
+                "type": "number"
+              },
+              "maxItems": 3,
+              "minItems": 3,
+              "type": "array"
+            },
+            "flicker": {
+              "maximum": 1000000,
+              "minimum": 0,
+              "type": "number"
+            },
+            "fov_degrees": {
+              "exclusiveMaximum": 170,
+              "exclusiveMinimum": 0,
+              "type": "number"
+            },
+            "inner_radius_cm": {
+              "maximum": 1000000,
+              "minimum": 0,
+              "type": "number"
+            },
+            "intensity": {
+              "maximum": 1000000,
+              "minimum": 0,
+              "type": "number"
+            },
+            "period_seconds": {
+              "maximum": 86400,
+              "minimum": 0.01,
+              "type": "number"
+            },
+            "radius_cm": {
+              "exclusiveMinimum": 0,
+              "maximum": 1000000000,
+              "type": "number"
+            },
+            "resource_path": {
+              "type": "string"
+            },
+            "source_sha256": {
+              "type": "string"
+            },
+            "type": {
+              "enum": [
+                "Point",
+                "Spot"
+              ],
+              "type": "string"
+            }
+          },
+          "required": [
+            "source_sha256",
+            "resource_path",
+            "radius_cm",
+            "color_rgb"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "source",
+        "spec",
+        "output"
+      ],
+      "type": "object"
+    },
+    "name": "sow_world_light_build",
+    "runtime_verified": false,
+    "schema_complete": true,
+    "status": "complete"
+  }
+]

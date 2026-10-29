@@ -1,0 +1,44 @@
+{
+  "repo": "https://github.com/microsoft/DirectXTex",
+  "commit": "ec66b78b37389e8373a8e14ccc3cd29be94146b3",
+  "license": "MIT",
+  "files": [
+    {
+      "name": "BC.cpp",
+      "sha256": "7554b64224f39e68ff99f9b070394dfddee811593a1b3d7c8004c5c2f94a47b0",
+      "bytes": 35953
+    },
+    {
+      "name": "BC.h",
+      "sha256": "498e86defa9e46f207a54aff2fbda814467c2d6d608e9d678ffff5e1cd142a49",
+      "bytes": 13347
+    },
+    {
+      "name": "BC4BC5.cpp",
+      "sha256": "1195f8417c764ed1623d3d5f88bf8a556326f768152617352399452df08a1063",
+      "bytes": 17572
+    },
+    {
+      "name": "BC6HBC7.cpp",
+      "sha256": "8962b6f2e28fce5c2003747f1e62219da8352fb79ba8245f60d53c2f20722e11",
+      "bytes": 161707
+    },
+    {
+      "name": "DirectXTex.h",
+      "sha256": "0d40ec551b5b68ce71b40b368038c233f32cfd6d62ae8ef18034ac643c405e37",
+      "bytes": 72224
+    },
+    {
+      "name": "DirectXTexP.h",
+      "sha256": "2a6f15ed8767dc92bdef5b56c2cc35b3fd1d123d73e69fa982a507eefa58aa59",
+      "bytes": 22357
+    },
+    {
+      "name": "LICENSE",
+      "sha256": "c2cfccb812fe482101a8f04597dfc5a9991a6b2748266c47ac91b6a5aae15383",
+      "bytes": 1141
+    }
+  ],
+  "purpose": "CPU BC1-BC7 block decoding; no GPU/device execution",
+  "downloaded_utc": "2026-10-25T06:22:12.2789171Z"
+}

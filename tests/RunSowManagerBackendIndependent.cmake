@@ -1,0 +1,25 @@
+if(NOT DEFINED Monstey_Exe OR NOT DEFINED Monstey_Out)
+  message(FATAL_ERROR "Monstey_Exe and Monstey_Out are required")
+endif()
+file(MAKE_DIRECTORY "${Monstey_Out}")
+execute_process(COMMAND "${Monstey_Exe}" "${Monstey_Out}/actual-differential.json"
+  RESULT_VARIABLE Monstey_Result OUTPUT_VARIABLE Monstey_Stdout
+  ERROR_VARIABLE Monstey_Stderr)
+file(WRITE "${Monstey_Out}/stdout.txt" "${Monstey_Stdout}")
+file(WRITE "${Monstey_Out}/stderr.txt" "${Monstey_Stderr}")
+if(NOT Monstey_Result EQUAL 0)
+  message(FATAL_ERROR "Actual backend independent comparison failed: ${Monstey_Result}\n${Monstey_Stdout}\n${Monstey_Stderr}")
+endif()
+file(READ "${Monstey_Out}/actual-differential.json" Monstey_Json)
+string(JSON Monstey_Status GET "${Monstey_Json}" status)
+string(JSON Monstey_Actual GET "${Monstey_Json}" actual_fixtures_compared)
+string(JSON Monstey_Reference GET "${Monstey_Json}" reference_fixtures)
+string(JSON Monstey_Exits GET "${Monstey_Json}" normal_exit_classes)
+string(JSON Monstey_Checks GET "${Monstey_Json}" checks)
+string(JSON Monstey_Bytes GET "${Monstey_Json}" complete_image_bytes)
+if(NOT Monstey_Status STREQUAL "PASS" OR NOT Monstey_Actual EQUAL 378
+   OR NOT Monstey_Reference EQUAL 378 OR NOT Monstey_Exits EQUAL 51
+   OR NOT Monstey_Checks EQUAL 1890 OR NOT Monstey_Bytes EQUAL 49545216)
+  message(FATAL_ERROR "Frozen backend comparison report does not match its accepted contract")
+endif()
+message(STATUS "Actual backend independent comparison: 378 pairs, 51 exits, 49545216 image bytes")

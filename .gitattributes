@@ -1,0 +1,5 @@
+* text=auto eol=lf
+*.json -text whitespace=cr-at-eol
+*.inc -text whitespace=cr-at-eol
+tests/preimages/** -text whitespace=-blank-at-eof,cr-at-eol
+tests/fixtures/** -text whitespace=-blank-at-eof,cr-at-eol
